@@ -264,6 +264,7 @@
   <dynamictemplate name="DefaultClimb">"You can't climb " + object.article + "."</dynamictemplate>
   <dynamictemplate name="DefaultDrink">"You can't drink " + object.article + "."</dynamictemplate>
   <dynamictemplate name="DefaultEat">"You can't eat " + object.article + "."</dynamictemplate>
+  <dynamictemplate name="DefaultEnter">WriteVerb(game.pov, "can't") + " enter " + object.article + "."</dynamictemplate>
   <dynamictemplate name="DefaultGive">WriteVerb(object1, "do") + " not want " + object2.article + "."</dynamictemplate>
   <dynamictemplate name="DefaultHit">"You can't hit " + object.article + "."</dynamictemplate>
   <dynamictemplate name="DefaultKill">"You can't kill " + object.article + "."</dynamictemplate>
@@ -296,7 +297,7 @@
   <delegate name="AssociatedScope" parameters="" type="objectlist" />
   <game name="Pixie's Quest">
     <gameid>ba3a1705-de77-4b97-b22e-0800c1e2beb5</gameid>
-    <version>1.5.0.1</version>
+    <version>1.5.0.2</version>
     <firstpublished>2017</firstpublished>
     <author>Dark Lizerd, XanMag, and K.V.</author>
     <aslversion>550</aslversion>
@@ -410,7 +411,8 @@
         JS.eval ("ASLEvent('AslSet',\"game.webplayer=\"+webPlayer+\"||game.mobileplayer=\"+ (typeof (currentTab) === 'string') +\"\");")
       }
       if (GetBoolean (startingup, "visited")){
-        InitPxUi
+        InitPxUi2
+        //SetBackgroundImage(game.backgroundimage)
         if (GetBoolean (game, "glitching")){
           do (kv_glitch, "glitching")
         }
@@ -1329,7 +1331,7 @@
           wait {
             JS.eval ("var scrollToEnd = scrollToEndBak1;scrollToEndBak1 = null;")
             ClearScreen
-            JS.goUrl ("http://media.textadventures.co.uk/games/cNFLuCu1cUqmUv0I9_KEIQ/index.html")
+            JS.goUrl ("https://media.textadventures.co.uk/games/cNFLuCu1cUqmUv0I9_KEIQ/index.html")
             MoveObject (player, kv_EndGameRoom)
           }
         }
@@ -1519,7 +1521,7 @@
       <alias><![CDATA[&nbsp;]]></alias>
       <usedefaultprefix type="boolean">false</usedefaultprefix>
       <description type="script"><![CDATA[
-        msg ("<center><h1>SHARDS OF ∞</h1><h3>THE BEGINNING</h3><h4>THANKS FOR PLAYING!</h4></center><hr/><center><h3>IF YOU LIKED THIS, YOU MIGHT ALSO LIKE:</h3><a href=\"http://textadventures.co.uk/user/view/EMxhs1Hs8UaIB5HFBLMp4A/xanmag\">Text adventures by XanMag</a><br/><br/><a href=\"https://textadventures.co.uk/user/view/EAQf-0Zm706miXjTq_GpFw/darklizerd\">Text adventures by DarkLizerd</a><br/><br/><a href=\"http://textadventures.co.uk/user/view/gudejtsx9komagj-tffyfg/richard-headkid\">Text adventures by Richard Headkid</a><br/><br/><a href=\"http://textadventures.co.uk/user/view/_O1rjdv47U2x-bATbXE_tw/the-pixie\">Text adventures by The Pixie</a><br/><br/><a href=\"http://textadventures.co.uk/forum/quest\">The Quest Forum</a></center>")
+        msg ("<center><h1>SHARDS OF ∞</h1><h3>THE BEGINNING</h3><h4>THANKS FOR PLAYING!</h4></center><hr/><center><h3>IF YOU LIKED THIS, YOU MIGHT ALSO LIKE:</h3><a href=\"https://textadventures.co.uk/user/view/EMxhs1Hs8UaIB5HFBLMp4A/xanmag\">Text adventures by XanMag</a><br/><br/><a href=\"https://textadventures.co.uk/user/view/EAQf-0Zm706miXjTq_GpFw/darklizerd\">Text adventures by DarkLizerd</a><br/><br/><a href=\"https://textadventures.co.uk/user/view/gudejtsx9komagj-tffyfg/richard-headkid\">Text adventures by Richard Headkid</a><br/><br/><a href=\"https://textadventures.co.uk/user/view/_O1rjdv47U2x-bATbXE_tw/the-pixie\">Text adventures by The Pixie</a><br/><br/><a href=\"https://textadventures.co.uk/forum/quest\">The Quest Forum</a></center>")
         ShowMenu ("GAME OVER<br/>What would you like to do?", Split("UNDO your last command;RESTART from the beginning;QUIT the game;Read your TRANSCRIPT", ";"), false) {
           switch (result) {
             case ("UNDO your last command") {
@@ -1747,7 +1749,7 @@
           <visible />
           <scenery type="boolean">false</scenery>
           <fav type="script"><![CDATA[
-            msg ("<img src='"+GetFileURL("jspost.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"http://textadventures.co.uk/forum/quest/topic/g60vk5rov0k4uc2sek2nvg/javascript-in-a-command\">View this post in your browser.</a>")
+            msg ("<img src='"+GetFileURL("jspost.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/g60vk5rov0k4uc2sek2nvg/javascript-in-a-command\">View this post in your browser.</a>")
             JS.scrollToEnd ()
           ]]></fav>
           <look type="script"><![CDATA[
@@ -1762,7 +1764,7 @@
                 msg ("This post has been automatically added to your Bookmarks. <br>(USE YOUR QUEST DEVICE TO VIEW YOUR BOOKMARKS.)")
               }
             }
-            msg ("<img src='"+GetFileURL("jspost.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"http://textadventures.co.uk/forum/quest/topic/g60vk5rov0k4uc2sek2nvg/javascript-in-a-command\">View this post in your browser.</a>")
+            msg ("<img src='"+GetFileURL("jspost.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/g60vk5rov0k4uc2sek2nvg/javascript-in-a-command\">View this post in your browser.</a>")
             RemoveObject (kv_js_post)
             if (HasAttribute(kv_device,"alertsnow")) {
               list remove (kv_device.alertsnow, kv_js_post)
@@ -2022,7 +2024,7 @@
         otherwise {
           msg ("XanMag is easily distracted by all the stimuli around him.  Currently his focus is on {random:scouring through the forum posts.:fiddling with his iPhone.:\"sipping\" his fancy beer.:flipping between browser tabs.:listening to music streaming out of his laptop.:the enthralling daydream he is having.}")
         }
-        DisplayHttpLink ("Visit XanMag's profile page.", "http://textadventures.co.uk/user/view/emxhs1hs8uaib5hfblmp4a/xanmag", false)
+        DisplayHttpLink ("Visit XanMag's profile page.", "https://textadventures.co.uk/user/view/emxhs1hs8uaib5hfblmp4a/xanmag", false)
       </look>
       <speak type="script"><![CDATA[
         if (GetBoolean(XanMag, "aware")) {
@@ -2650,7 +2652,7 @@
       <speak>HK ignores you.{once:  Try asking him about the forum or his favorite story.}</speak>
       <look type="script"><![CDATA[
         msg ("HK/hegemonkhan/HegemonKhan is smiling and nodding at you, but most of his attention is on his work.<br/><br/>You decide he might not appreciate people bothering him while he's studying and avert your attention elsehere.<br/>")
-        DisplayHttpLink ("Visit hegemonkhan's profile page on textadventures.co.uk", "http://textadventures.co.uk/user/view/c09F2iijXkGqmDNIeJwKqA/hegemonkhan", false)
+        DisplayHttpLink ("Visit hegemonkhan's profile page on textadventures.co.uk", "https://textadventures.co.uk/user/view/c09F2iijXkGqmDNIeJwKqA/hegemonkhan", false)
       ]]></look>
       <telltodefault type="script">
         msg ("\"I can't " + text + " because I'm trying to study, Pix.,\" says HegemonKhan.")
@@ -2786,11 +2788,11 @@
       <takemsg>You can't take it.  Try examining it.</takemsg>
       <look type="script">
         msg ("Click this link to view the Quest forum:")
-        DisplayHttpLink ("http://textadventures.co.uk/forum/quest", "http://textadventures.co.uk/forum/quest", false)
+        DisplayHttpLink ("https://textadventures.co.uk/forum/quest", "https://textadventures.co.uk/forum/quest", false)
       </look>
       <fav type="script">
         msg ("Opening page in browser...")
-        JS.goUrl ("http://textadventures.co.uk/forum/quest")
+        JS.goUrl ("https://textadventures.co.uk/forum/quest")
       </fav>
     </object>
     <object name="group project">
@@ -2836,7 +2838,7 @@
       <takemsg>You can't take it. Try examining it.</takemsg>
       <read>Just examine it please.</read>
       <look type="script"><![CDATA[
-        msg ("<img src='"+GetFileURL("generalpost.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"http://textadventures.co.uk/forum/general/topic/zi3qvd_s0kup9dabfes6rw/for-all-you-imbibers-out-there\">View this post in your browser.</a>")
+        msg ("<img src='"+GetFileURL("generalpost.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"https://textadventures.co.uk/forum/general/topic/zi3qvd_s0kup9dabfes6rw/for-all-you-imbibers-out-there\">View this post in your browser.</a>")
         firsttime {
           GeneralDiscussionPostXM.viewedXM = true
           IncreaseScore (5)
@@ -3082,7 +3084,7 @@ Try entering: gamename Pixie Kicks Ass
       <look type="script"><![CDATA[
         msg ("It's just a perfectly normal <span style=\"color:blue !important\">{popup:TeleMat&nbsp;booth:TeleMat booths offer instant travel around the world; just step inside, dial the number of your destination, and you will be instantly teleported there.}.")
       ]]></look>
-      <enter type="script"><![CDATA[
+      <enterverb type="script"><![CDATA[
         MoveObject (player, px_blue_telemat_booth)
         myscript => {
           params = NewDictionary()
@@ -3093,7 +3095,7 @@ Try entering: gamename Pixie Kicks Ass
         kv_token of appreciation.use = myscript
         kv_token of appreciation.generatedverbslist = NewStringList()
         list add (kv_token of appreciation.generatedverbslist, "Use")
-      ]]></enter>
+      ]]></enterverb>
       <onexit type="script"><![CDATA[
         myscript => {
           msg ("You can't do that.")
@@ -3250,7 +3252,7 @@ Try entering: gamename Pixie Kicks Ass
             }
           }
         }
-        msg ("<img src='" + GetFileURL("post23346.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"http://textadventures.co.uk/forum/quest/topic/3524/why-is-quest-unpopular#23240\">View this post in your browser.</a>")
+        msg ("<img src='" + GetFileURL("post23346.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/3524/why-is-quest-unpopular#23240\">View this post in your browser.</a>")
         if (player.loadedrh) {
           if (not ListContains(kv_device.favorites, post 23346)) {
             list add (kv_device.favorites, post 23346)
@@ -3260,7 +3262,7 @@ Try entering: gamename Pixie Kicks Ass
         MakeObjectInvisible (post 23346)
       ]]></look>
       <fav type="script"><![CDATA[
-        msg ("<img src='" + GetFileURL("post23346.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"http://textadventures.co.uk/forum/quest/topic/3524/why-is-quest-unpopular#23240\">View this post in your browser.</a>")
+        msg ("<img src='" + GetFileURL("post23346.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/3524/why-is-quest-unpopular#23240\">View this post in your browser.</a>")
       ]]></fav>
     </object>
     <turnscript name="rh_ingame">
@@ -4531,7 +4533,7 @@ Try entering: gamename Pixie Kicks Ass
     <pattern>credits</pattern>
     <script><![CDATA[
       msg ("<center><h2>Written, Edited, Recorded, Coded, Produced, and Directed by:</h2><b>THE QUEST FORUM:</b><br/>DarkLizerd<br/>XanMag<br/>K.V.<br/><br/><h3>Beta-tested by:<br/>Pertex</h3><br/><br/><h2>Starring:</h2><h1 style=\"font-size:400%\">The Pixie</h1><br/><br/><h3>...and The Quest Forum<h3></center><br/>")
-      DisplayHttpLink ("View the complete credit roll at textadventures.co.uk", "http://media.textadventures.co.uk/games/cNFLuCu1cUqmUv0I9_KEIQ/index.html", false)
+      DisplayHttpLink ("View the complete credit roll at textadventures.co.uk", "https://media.textadventures.co.uk/games/cNFLuCu1cUqmUv0I9_KEIQ/index.html", false)
       game.suppressturnscripts = true
     ]]></script>
   </command>
@@ -4829,7 +4831,7 @@ Try entering: gamename Pixie Kicks Ass
         </alt>
         <look type="script"><![CDATA[
           msg ("Richard Headkid stand 5' 10\" tall, and he probably weighs around a buck-fifty.<br/><br/>Something is definitely off about him, though...<br/>")
-          DisplayHttpLink ("Visit Richard Headkid's profile page.", "http://textadventures.co.uk/user/view/gudejtsx9komagj-tffyfg/richard-headkid", false)
+          DisplayHttpLink ("Visit Richard Headkid's profile page.", "https://textadventures.co.uk/user/view/gudejtsx9komagj-tffyfg/richard-headkid", false)
         ]]></look>
         <askdefault type="script">
           msg ("RH just shrugs.")
@@ -4889,7 +4891,7 @@ Try entering: gamename Pixie Kicks Ass
         </displayverbs>
         <take />
         <feature_usegive />
-        <look><![CDATA[Click here to examine The God Device:<br/><a href="http://textadventures.co.uk/games/view/v1ojyf53o02l_tnjm1kwoq/the-god-device">http://textadventures.co.uk/games/view/v1ojyf53o02l_tnjm1kwoq/the-god-device</a>]]></look>
+        <look><![CDATA[Click here to examine The God Device:<br/><a href="https://textadventures.co.uk/games/view/v1ojyf53o02l_tnjm1kwoq/the-god-device">https://textadventures.co.uk/games/view/v1ojyf53o02l_tnjm1kwoq/the-god-device</a>]]></look>
         <hintlist type="stringlist">
           <value>Hint 1:  Have YOU experienced The God Device?</value>
         </hintlist>
@@ -4905,7 +4907,7 @@ Try entering: gamename Pixie Kicks Ass
         ]]></ontake>
         <use type="script">
           msg ("Opening The God Device in browser...")
-          JS.goUrl ("http://media.textadventures.co.uk/games/V1ojyf53O02L_tnJm1KWoQ/god_device.html")
+          JS.goUrl ("https://media.textadventures.co.uk/games/V1ojyf53O02L_tnJm1KWoQ/god_device.html")
         </use>
       </object>
       <command name="glitchHelp">
@@ -5088,7 +5090,7 @@ Try entering: gamename Pixie Kicks Ass
           if (disk.parent = Richard Headkid) {
             msg ("\"Hi, Pixie!<br/> \"I think I just saw the textual representation of my imaginary self run through here!<br/> \"I hope not, because that guy is TROUBLE!\"<br/>")
           }
-          DisplayHttpLink ("Visit KV's profile page.", "http://textadventures.co.uk/user/view/3fbmqo02fkkr-emkcwxdma/k-v", false)
+          DisplayHttpLink ("Visit KV's profile page.", "https://textadventures.co.uk/user/view/3fbmqo02fkkr-emkcwxdma/k-v", false)
         ]]></look>
         <speak type="script"><![CDATA[
           if (disk.parent = Richard Headkid) {
@@ -5651,7 +5653,7 @@ Try entering: gamename Pixie Kicks Ass
       </inventoryverbs>
       <scenery />
       <look type="script"><![CDATA[
-        msg ("<img src='" + GetFileURL("timepost.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"http://textadventures.co.uk/forum/quest/topic/u_n5otugokquhpmnu0bdzw/how-do-i-get-time-to-work#d57928f9-27c4-4a93-9083-5892fc1d9cd8\">View this post in your browser.</a>")
+        msg ("<img src='" + GetFileURL("timepost.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/u_n5otugokquhpmnu0bdzw/how-do-i-get-time-to-work#d57928f9-27c4-4a93-9083-5892fc1d9cd8\">View this post in your browser.</a>")
         RemoveObject (kv_post_time)
         // UpdateInv2
         list add (kv_device.favorites, kv_post_time)
@@ -5660,7 +5662,7 @@ Try entering: gamename Pixie Kicks Ass
         JS.updateLocation (game.locationmsg)
       ]]></look>
       <fav type="script"><![CDATA[
-        msg ("<img src='" + GetFileURL("timepost.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"http://textadventures.co.uk/forum/quest/topic/u_n5otugokquhpmnu0bdzw/how-do-i-get-time-to-work#d57928f9-27c4-4a93-9083-5892fc1d9cd8\">View this post in your browser.</a>")
+        msg ("<img src='" + GetFileURL("timepost.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/u_n5otugokquhpmnu0bdzw/how-do-i-get-time-to-work#d57928f9-27c4-4a93-9083-5892fc1d9cd8\">View this post in your browser.</a>")
       ]]></fav>
     </object>
     <object name="rh_pic">
@@ -6326,7 +6328,7 @@ Try entering: gamename Pixie Kicks Ass
         }
         else {
           msg ("RH is currently {random:asking a dumb question.:trying to tell someone how to customize CSS.:showing someone how to hide the side panes.:editing a post, and cursing because he didn't {random:remove:add} enough characters and it says, 'You can't post that here.':cursing the messenger because it doesn't like the HTML code he just wrote.:working on a group project with others from the Quest Forum, but it doesn't look like it's DIMENSIONS OF INFINITY...}<br/>")
-          DisplayHttpLink ("Visit Richard Headkid's profile page.", "http://textadventures.co.uk/user/view/gudejtsx9komagj-tffyfg/richard-headkid", false)
+          DisplayHttpLink ("Visit Richard Headkid's profile page.", "https://textadventures.co.uk/user/view/gudejtsx9komagj-tffyfg/richard-headkid", false)
         }
       ]]></look>
       <telldefault type="script">
@@ -6628,7 +6630,7 @@ Try entering: gamename Pixie Kicks Ass
   <command name="kv_real_help">
     <pattern>real help;wtf;wth;what the fuck;what the hell;actual help</pattern>
     <script><![CDATA[
-      JS.showPopupFullscreen ("HELP", "This game was designed specifically for The Pixie, so there are MANY commands that are normally not included in a Quest game. <hr/> <b>COMMANDS (*require Scrolls)</b> <table style=\"border:1px solid;font-size:12px\"> <thead style=\"border:1px solid\"> <tr style=\"border:1px solid\"> <th style=\"border:1px solid\">Command</th> <th style=\"border:1px solid\">Pattern(s)</th> <th>Description</th> </tr> </thead> <tbody style=\"border:1px solid\"> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">ls</td> <td style=\"border:1px solid\">ls;dir</td> <td style=\"border:1px solid\">Prints a list of files accessible from 'the local drive'.</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">cat FILENAME</td> <td style=\"border:1px solid\"><code>cat #text#;print #text#</code></td> <td style=\"border:1px solid\">Prints the contents of a file on 'the local drive'.</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">dance</td> <td style=\"border:1px solid\"><code>dance</code></td> <td style=\"border:1px solid\">You will get down.</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">travel*</td> <td style=\"border:1px solid\"><code>travel;t</code></td> <td style=\"border:1px solid\">You will be transported to the hub. (NOTE: This only works while in Crate Mart.)</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">clear</td> <td style=\"border:1px solid\"><code>clear;clr;cls</code></td> <td style=\"border:1px solid\">Clears the screen.</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">showme*</td> <td style=\"border:1px solid\"><code>showme</code></td> <td style=\"border:1px solid\">Prints all child items of the current location.</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">showme it*</td> <td style=\"border:1px solid\"><code>showme #text#</code></td> <td style=\"border:1px solid\">Displays information about a specific object</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">showme all*</td> <td style=\"border:1px solid\"><code>showme all</code></td> <td style=\"border:1px solid\">Prints a list of all game objects.</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">msg</td> <td style=\"border:1px solid\"><code>msg (#text#)</code></td> <td style=\"border:1px solid\">Prints a message OR an attribute.</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">JS...</td> <td style=\"border:1px solid\"><code>JS.#text#</code></td> <td style=\"border:1px solid\">If you don't know what this can do, don't fool with it!</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">CloneObject*</td> <td style=\"border:1px solid\"><code>cloneobject (#text#)</code></td> <td style=\"border:1px solid\">Clones an object.<br>(NOTE: This does not MOVE the object!)</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">destroy*</td> <td style=\"border:1px solid\"><code>destroy (#text#)</code></td> <td style=\"border:1px solid\">Destroys an object.</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">gamename</td> <td style=\"border:1px solid\"><code>gamename #text#</code></td> <td style=\"border:1px solid\">Changes the game's name (takes immediate effect)</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">CHEAT*</td> <td style=\"border:1px solid\"><code>^cheat (?move|set|get) (?.+)$</code></td> <td style=\"border:1px solid\">Pixie knows what this does. (It's his command, after all!)</td> </tr></tbody></table> <hr/>  There is also a QUEST device in the player's inventory.(Just enter USE QUEST DEVICE to access the available options.) <hr/> IF YOU GET STUCK... Enter HINT or <a href=\"http://textadventures.co.uk/forum/quest/post\">ask for help on the forum</a>.                        ")
+      JS.showPopupFullscreen ("HELP", "This game was designed specifically for The Pixie, so there are MANY commands that are normally not included in a Quest game. <hr/> <b>COMMANDS (*require Scrolls)</b> <table style=\"border:1px solid;font-size:12px\"> <thead style=\"border:1px solid\"> <tr style=\"border:1px solid\"> <th style=\"border:1px solid\">Command</th> <th style=\"border:1px solid\">Pattern(s)</th> <th>Description</th> </tr> </thead> <tbody style=\"border:1px solid\"> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">ls</td> <td style=\"border:1px solid\">ls;dir</td> <td style=\"border:1px solid\">Prints a list of files accessible from 'the local drive'.</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">cat FILENAME</td> <td style=\"border:1px solid\"><code>cat #text#;print #text#</code></td> <td style=\"border:1px solid\">Prints the contents of a file on 'the local drive'.</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">dance</td> <td style=\"border:1px solid\"><code>dance</code></td> <td style=\"border:1px solid\">You will get down.</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">travel*</td> <td style=\"border:1px solid\"><code>travel;t</code></td> <td style=\"border:1px solid\">You will be transported to the hub. (NOTE: This only works while in Crate Mart.)</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">clear</td> <td style=\"border:1px solid\"><code>clear;clr;cls</code></td> <td style=\"border:1px solid\">Clears the screen.</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">showme*</td> <td style=\"border:1px solid\"><code>showme</code></td> <td style=\"border:1px solid\">Prints all child items of the current location.</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">showme it*</td> <td style=\"border:1px solid\"><code>showme #text#</code></td> <td style=\"border:1px solid\">Displays information about a specific object</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">showme all*</td> <td style=\"border:1px solid\"><code>showme all</code></td> <td style=\"border:1px solid\">Prints a list of all game objects.</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">msg</td> <td style=\"border:1px solid\"><code>msg (#text#)</code></td> <td style=\"border:1px solid\">Prints a message OR an attribute.</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">JS...</td> <td style=\"border:1px solid\"><code>JS.#text#</code></td> <td style=\"border:1px solid\">If you don't know what this can do, don't fool with it!</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">CloneObject*</td> <td style=\"border:1px solid\"><code>cloneobject (#text#)</code></td> <td style=\"border:1px solid\">Clones an object.<br>(NOTE: This does not MOVE the object!)</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">destroy*</td> <td style=\"border:1px solid\"><code>destroy (#text#)</code></td> <td style=\"border:1px solid\">Destroys an object.</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">gamename</td> <td style=\"border:1px solid\"><code>gamename #text#</code></td> <td style=\"border:1px solid\">Changes the game's name (takes immediate effect)</td> </tr> <tr style=\"border:1px solid\"> <td style=\"border:1px solid\">CHEAT*</td> <td style=\"border:1px solid\"><code>^cheat (?move|set|get) (?.+)$</code></td> <td style=\"border:1px solid\">Pixie knows what this does. (It's his command, after all!)</td> </tr></tbody></table> <hr/>  There is also a QUEST device in the player's inventory.(Just enter USE QUEST DEVICE to access the available options.) <hr/> IF YOU GET STUCK... Enter HINT or <a href=\"https://textadventures.co.uk/forum/quest/post\">ask for help on the forum</a>.                        ")
       game.suppressturnscripts = true
     ]]></script>
   </command>
@@ -6659,7 +6661,7 @@ Try entering: gamename Pixie Kicks Ass
     <pattern>view the Quest documentation</pattern>
     <script>
       msg ("Opening the Quest documentation in your browser...")
-      JS.goUrl ("http://docs.textadventures.co.uk/quest/]")
+      JS.goUrl ("https://docs.textadventures.co.uk/quest/]")
     </script>
   </command>
   <command name="kv_viewAlerts">
@@ -7480,11 +7482,13 @@ Try entering: gamename Pixie Kicks Ass
       LoadFile ("" + text + "")
     </script>
   </command>
-  <verb name="enter_verb">
-    <pattern>enter #object#;go to #object#;go into #object#;go inside #object#</pattern>
-    <property>enter</property>
-    <defaultexpression>"You can't enter "+object.article+"."</defaultexpression>
+
+  <verb name="enter">
+    <pattern>enter #object#; go in #object#; go into #object#; get in #object#; get into #object#</pattern>
+    <property>enterverb</property>
+    <defaulttemplate>DefaultEnter</defaulttemplate>
   </verb>
+
   <turnscript name="update_contents_in_lists_turnscript">
     <enabled />
     <script>
@@ -13617,6 +13621,14 @@ Try entering: gamename Pixie Kicks Ass
     SetBackgroundOpacity (0.8)
     SetBackgroundColour ("black")
     JS.setCss ("#gameBorder", "box-shadow:0px 0px 15px 5px #fac4ff;")
+  </function>
+  <function name="InitPxui2">
+    JS.setBackground ("black")
+    SetBackgroundImage ("px_avatar.png")
+    SetBackgroundOpacity (0.8)
+    SetBackgroundColour ("black")
+    JS.setCss ("#gameBorder", "box-shadow:0px 0px 15px 5px #fac4ff;")
+    JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 2px 2px #296231;")
   </function>
   <javascript src="pqstuff.js" />
 </asl>
