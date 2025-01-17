@@ -1,0 +1,20 @@
+Q:\Users\pixie\Documents\Quest-Master\Pixies-Quest\quest://local/
+ Volume in drive Q is Quest
+ Volume Serial Number is 69105-42-FRITTATA-11
+
+ Directory of Q:\Users\pixie\Documents\Quest-Master\Pixies-Quest\quest://local/
+
+09/17/2017  09:03 PM    <DIR>          .
+09/17/2017  09:03 PM    <DIR>          ..
+09/17/2017  08:48 PM         2,655,642 4px.aslx
+08/25/2017  03:10 AM               138 blue_Telemat-booth.txt
+09/02/2017  02:58 PM             1,037 dir.txt
+08/23/2017  01:45 PM         1,374,158 Drums237-drums only.mp3
+08/19/2017  12:59 PM         6,455,265 Fired Up.mp3
+09/06/2017  11:39 AM             2,769 JS_functions.txt
+09/17/2017  09:08 PM               331 ls.txt
+08/17/2017  11:33 AM               541 px_avatar.png
+09/17/2017  09:03 PM               344 README.txt
+08/13/2017  01:34 AM            84,525 script.png
+              10 File(s)     10,574,750 bytes
+               2 Dir(s)  286,386,765,824 bytes free

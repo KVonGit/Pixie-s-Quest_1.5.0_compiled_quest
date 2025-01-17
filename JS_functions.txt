@@ -1,0 +1,63 @@
+JS functions:
+
+  JS.setGameWidth(width)
+  JS.hideBorder()
+  JS.showBorder()
+  JS.setGamePadding(top, bottom, left, right)
+  JS.addExternalStyleheet(stylesheet)
+  // I think the stylesheet should be a file name (or perhaps a URL) as the parameter
+  JS.SetMenuBackground(colour)
+  JS.SetMenuForeground(colour)
+  JS.SetMenuHoverBackground(colour)
+  JS.SetMenuHoverForeground(colour)
+  JS.SetMenuFontName(fontname)
+  // these refer to the menu that appears when the player clicks on a hyperlink in the text
+  JS.SetMenuFontSize(size)
+  // the size must be a string that is a number followed by "pt"
+  JS.TurnOffHyperlinksUnderline()
+  JS.TurnOnHyperlinksUnderline()
+  JS.panesVisible(Boolean)
+  JS.showStatusVisible(Boolean)
+  JS.uiShow(element)
+  JS.uiHide(element)
+  // Valid element names include "#gamePanes", "#txtCommandDiv", "#location"
+  JS.setBackground(colour)
+  JS.setInterfaceString ("InventoryLabel", "You are holding")
+  JS.setInterfaceString ("SetInterfaceString", "StatusLabel=How you are doing")
+  JS.setInterfaceString ("SetInterfaceString", "PlacesObjectsLabel=Things you can see")
+  JS.setInterfaceString ("SetInterfaceString", "CompassLabel=Directions you can go")
+  JS.setInterfaceString ("SetInterfaceString", "InButtonLabel=In")
+  JS.setInterfaceString ("SetInterfaceString", "OutButtonLabel=out")
+  JS.setInterfaceString ("SetInterfaceString", "EmptyListLabel=Stuff all")
+  JS.setInterfaceString ("SetInterfaceString", "NothingSelectedLabel=-")
+  JS.setInterfaceString ("SetInterfaceString", "TypeHereLabel=Now what?")
+  JS.setInterfaceString ("SetInterfaceString", "ContinueLabel=Just press a button to get on with it")
+  
+  
+// Other things JS related (I think)
+//
+request (Hide, "Panes")
+request (Hide, "Location")
+request (Hide, "Command")
+SetBackgroundImage ("px_avatar.png")
+SetBackgroundOpacity (0.8)
+SetBackgroundColour ("black")
+JS.setCss ("#gameBorder", "box-shadow:0px 0px 15px 5px #fac4ff;")
+SetBackgroundOpacity (1)
+SetForegroundColour ("Black")
+SetBackgroundColour ("White")
+request (Show, "Location")
+request (Show, "Command")
+JS.setCss ("div#gameBorder", "box-shadow:0px 0px 15px 5px black;")
+SetBackgroundImage ("none") //I don't know if this is cool or not...
+JS.setCss ("#gamePanes", "background:black")
+JS.addText (game.css2)
+
+
+JS.eval ("$('#inventoryLabel').insertAfter('#Inventory2Accordion')")
+JS.eval ("$('#inventoryAccordion').insertAfter('#inventoryLabel')")
+JS.setCss ("div#gamePanes", "background-color:#296231")
+JS.setCss (".elementListWrapper", "background-color:#296231")
+JS.setCss (".elementListWrapper", "color:#fac4ff")
+JS.setCss("#gamePanesRunning", "pointer-events: none;")
+JS.setCss("#txtCommand", "outline:none;box-shadow:0px 0px 5px 5px #296231;")

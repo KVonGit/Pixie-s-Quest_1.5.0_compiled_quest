@@ -1,0 +1,7 @@
+
+pixie@QUESTPX-B5.7.6404.27031 MSYSqUEST /c/Users/pixie/Documents/Quest-Master/Pixies-Quest/quest://local/
+
+$ ls
+ 4px.aslx                'Drums237-drums only.mp3'   ls.txt          script.png
+ blue_Telemat-booth.txt  'Fired Up.mp3'              px_avatar.png
+ dir.txt                  JS_functions.txt           README.txt
