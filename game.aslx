@@ -296,7 +296,7 @@
   <delegate name="AssociatedScope" parameters="" type="objectlist" />
   <game name="Pixie's Quest">
     <gameid>ba3a1705-de77-4b97-b22e-0800c1e2beb5</gameid>
-    <version>1.5.1</version>
+    <version>1.5.0.1</version>
     <firstpublished>2017</firstpublished>
     <author>Dark Lizerd, XanMag, and K.V.</author>
     <aslversion>550</aslversion>
@@ -337,7 +337,7 @@
       <value>This space intentionally left blank.</value>
       <value>Now what?</value>
     </cmdprompts>
-    <publishfileextensions>*.jpg;*.jpeg;*.png;*.gif;*.js;*.wav;*.mp3;*.htm;*.html;*.svg;*.md;*.txt;*.pptx</publishfileextensions>
+    <publishfileextensions>*.jpg;*.jpeg;*.png;*.gif;*.js;*.wav;*.mp3;*.htm;*.html;*.svg;*.md;*.txt</publishfileextensions>
     <showpanes />
     <tower><![CDATA[<img  style="border:none;" src="{=GetFileURL("qdk-background.jpg")}" alt="QuestTower" width="32%" height="32%"/>]]></tower>
     <underlinehyperlinks />
@@ -13616,7 +13616,7 @@ Try entering: gamename Pixie Kicks Ass
     SetBackgroundImage ("px_avatar.png")
     SetBackgroundOpacity (0.8)
     SetBackgroundColour ("black")
-    JS.setCss ("#gameBorder", "box-shadow:0px 0px 15px 5px #fac4ff;")")
+    JS.setCss ("#gameBorder", "box-shadow:0px 0px 15px 5px #fac4ff;")
   </function>
   <javascript src="pqstuff.js" />
 </asl>
