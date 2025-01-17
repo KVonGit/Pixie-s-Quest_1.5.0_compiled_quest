@@ -296,7 +296,7 @@
   <delegate name="AssociatedScope" parameters="" type="objectlist" />
   <game name="Pixie's Quest">
     <gameid>ba3a1705-de77-4b97-b22e-0800c1e2beb5</gameid>
-    <version>1.5.0</version>
+    <version>1.5.1</version>
     <firstpublished>2017</firstpublished>
     <author>Dark Lizerd, XanMag, and K.V.</author>
     <aslversion>550</aslversion>
@@ -337,7 +337,7 @@
       <value>This space intentionally left blank.</value>
       <value>Now what?</value>
     </cmdprompts>
-    <publishfileextensions>*.jpg;*.jpeg;*.png;*.gif;*.js;*.wav;*.mp3;*.htm;*.html;*.svg;*.md;*.txt;*.pptx;*.questjs</publishfileextensions>
+    <publishfileextensions>*.jpg;*.jpeg;*.png;*.gif;*.js;*.wav;*.mp3;*.htm;*.html;*.svg;*.md;*.txt;*.pptx</publishfileextensions>
     <showpanes />
     <tower><![CDATA[<img  style="border:none;" src="{=GetFileURL("qdk-background.jpg")}" alt="QuestTower" width="32%" height="32%"/>]]></tower>
     <underlinehyperlinks />
@@ -406,7 +406,19 @@
         SetupSidenav
       }
       JS.eval ("$(\"#txtCommand\").css(\"font-size\", \"16px\")")
-      JS.eval ("ASLEvent('AslSet',\"game.webplayer=\"+webPlayer+\"||game.mobileplayer=\"+ (typeof (currentTab) === 'string') +\"\");")
+      if (not StartsWith (GetFileURL (""), "quest") {
+        JS.eval ("ASLEvent('AslSet',\"game.webplayer=\"+webPlayer+\"||game.mobileplayer=\"+ (typeof (currentTab) === 'string') +\"\");")
+      }
+      if (GetBoolean (startingup, "visited")){
+        InitPxUi
+        if (GetBoolean (game, "glitching")){
+          do (kv_glitch, "glitching")
+        }
+        if (GetBoolean (game, "took_glitch")){
+          request (Show, "Location")
+          statusmove
+        }
+      }
     ]]></inituserinterface>
     <unresolvedcommandhandler type="script">
       game.lasterror = command
@@ -1040,8 +1052,7 @@
         s = s + "<b>AUTHOR: </b>" + game.author + "<br/>"
       }
       s = s + "<b>VERSION: </b>" + game.version + "<br/>"
-      s = s + "<b>IFID: </b>" + game.gameid + "<br/>"
-      s = s + "<br/>"
+      s = s + "<b>IFID: </b>" + game.gameid
       msg (s)
       game.suppressturnscripts = true
     ]]></script>
@@ -1554,12 +1565,7 @@
     </description>
     <enter type="script"><![CDATA[
       ClearScreen
-      JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 5px 5px #296231;")
-      JS.uiHide ("#gamePanes")
-      SetBackgroundImage ("px_avatar.png")
-      SetBackgroundOpacity (0.8)
-      SetBackgroundColour ("black")
-      JS.setCss ("#gameBorder", "box-shadow:0px 0px 15px 5px #fac4ff;")
+      InitPxUi
       PrintCentered ("{command:clear then look:<br/><img width=\"10%\" src=\"" + GetFileURL("px_avatar.png") + "\"  onload=\"$(this).fadeIn(10000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" /><br/><br/><br/><img src=\"" + GetFileURL("titlesplash.png")  + "\"  onload=\"$(this).fadeIn(1500);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" /><br/><br/><img onclick=\"ASLEvent('HandleNavCmdClick', 'l');\" src=\"" + GetFileURL("Initialising.png")  + "\"  onload=\"$(this).fadeOut(5500);\" /><br/></center><br/>}")
       PrintCentered ("<span>  {command:clear then look:<img src=\"" + GetFileURL("anykeytocontinue.png") + "\" id=\"titleimage\" onload=\"$(this).fadeIn(10000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" />}</span>")
       wait {
@@ -1586,7 +1592,7 @@
       JS.setCss ("#location, #status, .ui-widget-header", "background-color:#296231;border:1px solid #296231;background-image:none;")
       AddQuest (DarkLizerd, "Visit Dark Lizerds room", "Visit Dark Lizerd's world")
       AddQuest (KV, "KVs_World", "Visit KV's gateway.")
-      JS.setCommands ("Look;Get all;UNDO;Wait;ClearScreen;Panes;Hints", "black")
+      JS.setCommands ("Look;Get all;UNDO;Wait;Save;ClearScreen;Panes;Hints", "black")
       JS.setCss ("#gameContent", "background:url('" + GetFileURL("qdk-background.jpg") + "');")
       JS.uiHide ("#txtCommand")
       game.parserignoreprefixes = Split("a;an;the;fucking;damn;damned;the fucking;the damn;the damned", ";")
@@ -1929,14 +1935,14 @@
         game.classiclocation = false
         JS.eval ("$('div#commandPane').insertBefore('#inventoryLabel')")
         JS.setPanes ("black", "white")
-        JS.setCommands ("Look;Get All;UNDO;Wait;ClearScreen;Panes", "black")
+        JS.setCommands ("Look;Get All;UNDO;Wait;Save;ClearScreen;Panes", "black")
         JS.setCss ("#gamePanes", "background:black")
         JS.setPanes ("black", "white")
         JS.addText (game.css)
         JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 5px 5px #296231;")
         JS.setCss ("#location, #status, .ui-widget-header", "background-color:#296231;border:1px solid #296231;background-image:none;")
         JS.setPanes ("black", "white")
-        JS.setCommands ("Look;Get All; UNDO;Clear the screen;Wait;Hide Panes")
+        JS.setCommands ("Look;Get All; UNDO;Save;Clear the screen;Wait;Hide Panes")
         JS.setCss ("#location", "background:#296231")
         JS.setCss ("#status", "background-image:none;")
         JS.setCss ("#status.ui-widget-header", "background:#296231;")
@@ -4761,6 +4767,7 @@ Try entering: gamename Pixie Kicks Ass
             IncreaseScore (10)
             msg ("<center><b>[  YOUR SCORE HAS INCREASED BY 10  ]</br></center>")
             list add (game.scoreList, "Tried to take the glitch: 10 points")
+            game.took_glitch = true
           }
           else {
             msg ("You try to pick it up, but you lack focus.")
@@ -4775,6 +4782,7 @@ Try entering: gamename Pixie Kicks Ass
           }
         </look>
         <glitching type="script">
+          game.glitching = true
           SetBackgroundImage ("script.png")
           SetBackgroundOpacity (0.7)
           SetBackgroundColour (game.defaultbackground)
@@ -5275,7 +5283,7 @@ Try entering: gamename Pixie Kicks Ass
             MoveObject (kv_desk, Quest Forum)
           }
           else {
-            msg ("\"You can't go that way right now, Pix,\" says KV.(either not kv_meadow.visited: \"There must be something you haven't done yet!\"|\"You've already done that bit!\"}<br/>")
+            msg ("\"You can't go that way right now, Pix,\" says KV. {either not kv_meadow.visited:\"There must be something you haven't done yet!\"|\"You've already done that bit!\"}<br/>")
         }
         ]]></script>
       </exit>
@@ -7498,9 +7506,7 @@ Try entering: gamename Pixie Kicks Ass
   <command name="save_mod">
     <pattern>save</pattern>
     <script>
-      // I am setting game.webplayer in game.inituserinterface
-      // game.questplatform will be set in Quest 5.8 games.
-      if (GetBoolean (game, "webplayer") or GetAttribute(game, "questplatform") = "webplayer" or GetAttribute(game, "questplatform") = "mobile") {
+      if (not StartsWith(GetFileURL(""), "quest")) {
         JS.saveGame ()
       }
       else {
@@ -13523,6 +13529,7 @@ Try entering: gamename Pixie Kicks Ass
     AddSidenavCmdLink ("Get all")
     AddSidenavCmdLink ("Undo")
     AddSidenavCmdLink ("Wait")
+    AddSidenavCmdLink ("Save")
     AddSidenavCmdLink ("Clear")
     AddSidenavCmdLink ("Panes")
     AddSidenavCmdLink ("HINTS")
@@ -13603,5 +13610,13 @@ Try entering: gamename Pixie Kicks Ass
     CheckDarkness
     UpdateObjectLinks
   </function>
-  <javascript src="pqstuff.questjs" />
+  <function name="InitPxUi">
+    JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 5px 5px #296231;")
+    JS.uiHide ("#gamePanes")
+    SetBackgroundImage ("px_avatar.png")
+    SetBackgroundOpacity (0.8)
+    SetBackgroundColour ("black")
+    JS.setCss ("#gameBorder", "box-shadow:0px 0px 15px 5px #fac4ff;")")
+  </function>
+  <javascript src="pqstuff.js" />
 </asl>
