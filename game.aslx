@@ -297,7 +297,7 @@
   <delegate name="AssociatedScope" parameters="" type="objectlist" />
   <game name="Pixie's Quest">
     <gameid>ba3a1705-de77-4b97-b22e-0800c1e2beb5</gameid>
-    <version>1.5.0.2</version>
+    <version>1.5.0.3</version>
     <firstpublished>2017</firstpublished>
     <author>Dark Lizerd, XanMag, and K.V.</author>
     <aslversion>550</aslversion>
@@ -407,10 +407,10 @@
         SetupSidenav
       }
       JS.eval ("$(\"#txtCommand\").css(\"font-size\", \"16px\")")
-      if (not StartsWith (GetFileURL (""), "quest") {
-        JS.eval ("ASLEvent('AslSet',\"game.webplayer=\"+webPlayer+\"||game.mobileplayer=\"+ (typeof (currentTab) === 'string') +\"\");")
+      if (not StartsWith (GetFileURL (""), "quest")) {
+        JS.eval ("ASLEvent('AslSet',\"game.webplayer=\" + webPlayer + \"||game.mobileplayer=\" + (typeof (currentTab) === 'string') + \"\");")
       }
-      if (GetBoolean (startingup, "visited")){
+      if (GetBoolean (game, "pxui")){
         InitPxUi2
         //SetBackgroundImage(game.backgroundimage)
         if (GetBoolean (game, "glitching")){
@@ -1614,7 +1614,7 @@
         PrintCentered ("<span style=\"font-size:260%\">{game.gamename}</span><br/><span style=\"font-size:145%\">by {game.author}</span><br/>")
         msg ("{command:clear then look:<span><center>This game is for The Pixie. Thanks for everything you do!</center><br><hr/><br></span>}")
         msg ("")
-        PrintCentered ("<span style=\"background:#296231;padding:6px;box-shadow:0px 0px 15px 5px #fac4ff;;text-shadow:0 0 4px black\"><b>    {command:clear then look:{colour:#fac4ff:PRESS ANY KEY TO BEGIN}}</b></span><br/>")
+        PrintCentered ("<span style=\"background:#296231;padding:6px;box-shadow:0px 0px 15px 5px #fac4ff;;text-shadow:0 0 4px black\"><b>    <span onclick=\"sendEndWait()\">{colour:#fac4ff:PRESS ANY KEY TO BEGIN}</span></b></span><br/>")
         wait {
           SetBackgroundOpacity (1.0)
           JS.uiShow ("#location")
@@ -2626,12 +2626,12 @@
         <value>Look at</value>
         <value>Enter</value>
       </displayverbs>
-      <enter type="script"><![CDATA[
+      <enterverb type="script"><![CDATA[
         msg ("As you approach the black hole, you the dumbness wash over you...  <br/><br/>The last thing you recall is a faint sucking sound...")
         wait {
           MoveObject (player, BeatLabXM)
         }
-      ]]></enter>
+      ]]></enterverb>
     </object>
     <object name="hegemonkhan">
       <inherit name="namedmale" />
@@ -3086,21 +3086,19 @@ Try entering: gamename Pixie Kicks Ass
       ]]></look>
       <enterverb type="script"><![CDATA[
         MoveObject (player, px_blue_telemat_booth)
-        myscript => {
+        kv_token of appreciation.use => {
           params = NewDictionary()
           dictionary add (params, "object1", kv_token of appreciation)
           dictionary add (params, "object2", kv_slot)
           do (put, "script", params)
         }
-        kv_token of appreciation.use = myscript
         kv_token of appreciation.generatedverbslist = NewStringList()
         list add (kv_token of appreciation.generatedverbslist, "Use")
       ]]></enterverb>
       <onexit type="script"><![CDATA[
-        myscript => {
+        kv_token of appreciation.use => {
           msg ("You can't do that.")
         }
-        kv_token of appreciation.use = myscript
         if (ListContains(kv_token of appreciation.generatedverbslist, "Use")) {
           list remove (kv_token of appreciation.generatedverbslist, "Use")
         }
@@ -3209,6 +3207,7 @@ Try entering: gamename Pixie Kicks Ass
       <object name="kv_buttons">
         <inherit name="kvtype" />
         <visible />
+        <usedefaultprefix type="boolean">false</usedefaultprefix>
         <attr name="not_all" type="string"></attr>
         <displayverbs type="stringlist">
           <value>Look at</value>
@@ -3303,7 +3302,7 @@ Try entering: gamename Pixie Kicks Ass
       </displayverbs>
       <takemsg>It's fixed in place.</takemsg>
       <not_all />
-      <enter type="script"><![CDATA[
+      <enterverb type="script"><![CDATA[
         // MakeObjectVisible (DL_Keypad)
         // firsttime {
           // msg ("As you get ready to go through the doorway, you notice a {object:DL_Keypad:keypad} on the wall. ")
@@ -3316,7 +3315,7 @@ Try entering: gamename Pixie Kicks Ass
           DL_Keypad.visible = true
         }
         MoveObject (player, DL_Room)
-      ]]></enter>
+      ]]></enterverb>
     </object>
   </object>
   <object name="DL_Room">
@@ -3855,13 +3854,13 @@ Try entering: gamename Pixie Kicks Ass
         <value>Look at</value>
         <value>Enter</value>
       </displayverbs>
-      <enter type="script"><![CDATA[
+      <enterverb type="script"><![CDATA[
         msg ("As you approach the black hole, you feel smarter and smarter...  <br/><br/>The last thing you recall is a faint sucking sound...")
         // MoveObjectHere (headphoneXM)
         wait {
           MoveObject (player, Quest Forum)
         }
-      ]]></enter>
+      ]]></enterverb>
       <exit alias="out" to="Quest Forum">
         <inherit name="outdirection" />
       </exit>
@@ -4599,10 +4598,6 @@ Try entering: gamename Pixie Kicks Ass
       <dark />
       <darkroomdescription>You can't see anything, smell anything, hear anything, or taste anything.</darkroomdescription>
       <alias>Darkness</alias>
-      <enter type="script">
-      </enter>
-      <onexit type="script">
-      </onexit>
       <beforeenter type="script">
         JS.uiShow ("#commandPane")
         JS.setCommands ("Feel around")
@@ -4789,15 +4784,13 @@ Try entering: gamename Pixie Kicks Ass
           SetBackgroundOpacity (0.7)
           SetBackgroundColour (game.defaultbackground)
         </glitching>
-        <beforeenter type="script">
-        </beforeenter>
-        <enter type="script">
+        <enterverb type="script">
           // ClearScreen
           foreach (o, GetDirectChildren(kv_glitch)) {
             MoveObject (o, kv_Crate Mart)
             kv_glitch.parent = kv_Crate Mart
           }
-        </enter>
+        </enterverb>
         <hints type="scriptdictionary">
           <item key="showhints">
             ShowMenu ("What do I do with the glitch?", kv_glitch.hinttopics, true) {
@@ -5458,20 +5451,24 @@ Try entering: gamename Pixie Kicks Ass
             <pattern>showme #text#</pattern>
             <script><![CDATA[
               o = GetObject(text)
-              msg (o + " Current location: " + o.parent)
-              foreach (b, AllObjects()) {
-                if (b = GetObject(text)) {
-                  // msg (b.name)
-                  if (not b.name = null) {
-                    game.attnames = GetAttributeNames(b, true)
-                    msg ("<br><b>ChildObjects:</b>")
-                    binv = (GetAllChildObjects(b))
-                    foreach (obj, binv) {
-                      msg (obj)
-                    }
-                    ShowMenu ("View the object's attributes?", Split("yes;no", ";"), true) {
-                      if (result = "yes") {
-                        DisplayList (game.attnames, false)
+              if (o <> null){
+                if (HasAttribute (o, "parent")){
+                  msg (o + " Current location: " + o.parent)
+                }
+                foreach (b, AllObjects()) {
+                  if (b = GetObject(text)) {
+                    // msg (b.name)
+                    if (not b.name = null) {
+                      game.attnames = GetAttributeNames(b, true)
+                      msg ("<br><b>ChildObjects:</b>")
+                      binv = (GetAllChildObjects(b))
+                      foreach (obj, binv) {
+                        msg (obj)
+                      }
+                      ShowMenu ("View the object's attributes?", Split("yes;no", ";"), true) {
+                        if (result = "yes") {
+                          DisplayList (game.attnames, false)
+                        }
                       }
                     }
                   }
@@ -5484,7 +5481,9 @@ Try entering: gamename Pixie Kicks Ass
             <script>
               // DisplayList ((GetAllChildObjects(game.pov.parent)), false)
               foreach (o, (GetAllChildObjects(game.pov.parent))) {
-                msg (o + ", parent: " + o.parent)
+                if (HasAttribute (o, "parent")){
+                  msg (o + ", parent: " + o.parent)
+                }
               }
             </script>
           </command>
@@ -5507,19 +5506,18 @@ Try entering: gamename Pixie Kicks Ass
         <look type="script"><![CDATA[
           msg ("It's just a perfectly normal {popup:TeleMat&nbsp;booth:TeleMat booths offer instant travel around the world; just step inside, dial the number of your destination, and you will be instantly teleported there.}.")
         ]]></look>
-        <enter type="script"><![CDATA[
-          myscript => {
+        <enterverb type="script"><![CDATA[
+          MoveObject (game.pov, this)
+          kv_token of appreciation.use => {
             HandleSingleCommand ("put token in slot")
           }
-          kv_token of appreciation.use = myscript
           kv_token of appreciation.generatedverbslist = NewStringList()
           list add (kv_token of appreciation.generatedverbslist, "Use")
-        ]]></enter>
+        ]]></enterverb>
         <onexit type="script"><![CDATA[
-          myscript => {
+          kv_token of appreciation.use => {
             msg ("You can't do that.")
           }
-          kv_token of appreciation.use = myscript
           if (ListContains(kv_token of appreciation.generatedverbslist, "Use")) {
             list remove (kv_token of appreciation.generatedverbslist, "Use")
           }
@@ -5639,7 +5637,7 @@ Try entering: gamename Pixie Kicks Ass
       </object>
       <object name="canvas screen">
         <look><![CDATA[KV is watching {if game.turns<120:Quentin Tarantino's "Death Proof".  {either game.turns< 48:They're still in the bar.  {if game.turns>40:It's the lap-dance scene.}|It's the good part.  The rest of the movie is a car chase!}}{if game.turns>120:{if game.turns<255:a Bruce Lee movie.  {either game.turns<210:It's The Way of the Dragon.|It's the REAL, unfinished version of The Game of Death.}}{if game.turns>255:{either game.turns<375:Young Frankenstein|Blazing Saddles}.}}]]></look>
-        <takemsg>KV wouldn't appreciat that very much.</takemsg>
+        <takemsg>KV wouldn't appreciate that very much.</takemsg>
         <not_all />
       </object>
     </object>
@@ -13621,8 +13619,9 @@ Try entering: gamename Pixie Kicks Ass
     SetBackgroundOpacity (0.8)
     SetBackgroundColour ("black")
     JS.setCss ("#gameBorder", "box-shadow:0px 0px 15px 5px #fac4ff;")
+    game.pxui = true
   </function>
-  <function name="InitPxui2">
+  <function name="InitPxUi2">
     JS.setBackground ("black")
     SetBackgroundImage ("px_avatar.png")
     SetBackgroundOpacity (0.8)
