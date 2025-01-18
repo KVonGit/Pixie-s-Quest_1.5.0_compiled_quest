@@ -297,7 +297,7 @@
   <delegate name="AssociatedScope" parameters="" type="objectlist" />
   <game name="Pixie's Quest">
     <gameid>ba3a1705-de77-4b97-b22e-0800c1e2beb5</gameid>
-    <version>1.5.0.3</version>
+    <version>1.5.0.4</version>
     <firstpublished>2017</firstpublished>
     <author>Dark Lizerd, XanMag, and K.V.</author>
     <aslversion>550</aslversion>
@@ -401,18 +401,26 @@
       FinishGame ("You have died!")
     </onhealthzero>
     <inituserinterface type="script"><![CDATA[
+      //Log("Running inituserinterface")
+      //Log("game.backgroundimage")
+      //Log(game.backgroundimage)
       JS.eval ("$('body').append('<style>@media only screen and (max-width: 956px) {#gamePanes, .game-stats {display: none !important;}}</style>');")
+      //Log("timeelapsed")
+      //Log(game.timeelapsed)
       if (not game.timeelapsed = 0) {
         UpdateContentsInLists
         SetupSidenav
       }
       JS.eval ("$(\"#txtCommand\").css(\"font-size\", \"16px\")")
       if (not StartsWith (GetFileURL (""), "quest")) {
-        JS.eval ("ASLEvent('AslSet',\"game.webplayer=\" + webPlayer + \"||game.mobileplayer=\" + (typeof (currentTab) === 'string') + \"\");")
+        JS.eval ("ASLEvent ('AslSet', 'game.webplayer='" + isMobilePlayer().toString() + "');")
       }
+      //Log("checking game.pxui...")
       if (GetBoolean (game, "pxui")){
-        InitPxUi2
-        //SetBackgroundImage(game.backgroundimage)
+        //Log("pxui is true")
+        InitPxUi
+        SetBackgroundColour ("White")
+        JS.setCss ("#gamePanes", "background:black")
         if (GetBoolean (game, "glitching")){
           do (kv_glitch, "glitching")
         }
@@ -420,6 +428,9 @@
           request (Show, "Location")
           statusmove
         }
+      }
+      if (HasScript (game, "xminitinterface")){
+        invoke (game.xminitinterface)
       }
     ]]></inituserinterface>
     <unresolvedcommandhandler type="script">
@@ -1568,6 +1579,7 @@
     <enter type="script"><![CDATA[
       ClearScreen
       InitPxUi
+      SetBackgroundOpacity(0.8)
       PrintCentered ("{command:clear then look:<br/><img width=\"10%\" src=\"" + GetFileURL("px_avatar.png") + "\"  onload=\"$(this).fadeIn(10000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" /><br/><br/><br/><img src=\"" + GetFileURL("titlesplash.png")  + "\"  onload=\"$(this).fadeIn(1500);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" /><br/><br/><img onclick=\"ASLEvent('HandleNavCmdClick', 'l');\" src=\"" + GetFileURL("Initialising.png")  + "\"  onload=\"$(this).fadeOut(5500);\" /><br/></center><br/>}")
       PrintCentered ("<span>  {command:clear then look:<img src=\"" + GetFileURL("anykeytocontinue.png") + "\" id=\"titleimage\" onload=\"$(this).fadeIn(10000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" />}</span>")
       wait {
@@ -1702,6 +1714,9 @@
           PrintCentered ("<div style=\"background:inherit;padding:12px\" ><br/><img width=\"10%\" <img src=\"" + GetFileURL("quest_square.png")  + "\"  title=\"QUEST PX\" id=\"titleimage\" onload=\"$(this).fadeIn(2000);\" style=\"display:none;\" /><br/><br/><img src=\"" + GetFileURL("viewalerts.png")  + "\"  title=\"Click here to view your alerts!\" id=\"titleimage\" onload=\"$(this).fadeIn(3000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #269261;\"  onclick=\"ASLEvent('HandleButtonClick','view alerts')\" /><br/><br/><img <img src=\"" + GetFileURL("viewbookmarks.png")  + "\"  title=\"Click here to view your bookmarks!\" id=\"titleimage\" onload=\"$(this).fadeIn(4000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #269261;\"  onclick=\"ASLEvent('HandleButtonClick','view bookmarks')\" /><br/><br/><img src=\"" + GetFileURL("viewdocs.png")  + "\" title=\"Click here to view the online Quest documentation!\"  id=\"titleimage\" onload=\"$(this).fadeIn(5000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #269261;\"  onclick=\"ASLEvent('HandleButtonClick','view the Quest documentation')\" /><br/>{if player.loadedrh:<br/><img <img src=\"" + GetFileURL("consulthints.png")  + "\" title=\"Clicking this is a waste of time!\"  id=\"titleimage\" onload=\"$(this).fadeIn(5500);\" style=\"display:none;box-shadow:0px 0px 15px 5px #269261;\"  onclick=\"ASLEvent('HandleButtonClick','hints')\" /><br/><br/><img <img src=\"" + GetFileURL("viewcommands.png")  + "\" title=\"View the command list (for copying and pasting purposes)!\"  id=\"titleimage\" onload=\"$(this).fadeIn(6000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #269261;\"  onclick=\"ASLEvent('HandleButtonClick','scopecommands')\" /><br/>}</div>")
           EndOutputSection (game.menuoutputsection)
           msg ("")
+          SetTimeout(1){
+            JS.scrollToEnd()
+          }
         ]]></use>
         <onswitchon type="script">
           picture ("quest_square.png")
@@ -1927,7 +1942,7 @@
     ]]></enter>
     <firstenter type="script"><![CDATA[
       AddQuest (XanMag, "helpXan", "Help XanMag out with a thing or few.")
-      game.inituserinterface => {
+      game.xminituserinterface => {
         JS.setDivCount (ToInt(game.lastoutputbeforesave) * 3)
         if (game.online) {
           SetTimeout (2) {
@@ -11611,6 +11626,7 @@ Try entering: gamename Pixie Kicks Ass
   </function>
   <function name="Log" parameters="text">
     request (Log, text)
+    JS.console.log(text)
   </function>
   <function name="SetBackgroundImage" parameters="filename">
     JS.SetBackgroundImage (GetFileURL(filename))
@@ -13613,21 +13629,13 @@ Try entering: gamename Pixie Kicks Ass
     UpdateObjectLinks
   </function>
   <function name="InitPxUi">
-    JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 5px 5px #296231;")
-    JS.uiHide ("#gamePanes")
-    SetBackgroundImage ("px_avatar.png")
-    SetBackgroundOpacity (0.8)
-    SetBackgroundColour ("black")
-    JS.setCss ("#gameBorder", "box-shadow:0px 0px 15px 5px #fac4ff;")
-    game.pxui = true
-  </function>
-  <function name="InitPxUi2">
     JS.setBackground ("black")
     SetBackgroundImage ("px_avatar.png")
-    SetBackgroundOpacity (0.8)
+    SetBackgroundOpacity (1.0)
     SetBackgroundColour ("black")
     JS.setCss ("#gameBorder", "box-shadow:0px 0px 15px 5px #fac4ff;")
     JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 2px 2px #296231;")
+    game.pxui = true
   </function>
   <javascript src="pqstuff.js" />
 </asl>
