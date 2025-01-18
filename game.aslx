@@ -299,7 +299,7 @@
   <delegate name="AssociatedScope" parameters="" type="objectlist" />
   <game name="Pixie's Quest">
     <gameid>ba3a1705-de77-4b97-b22e-0800c1e2beb5</gameid>
-    <version>1.5.0.5</version>
+    <version>1.5.0.6</version>
     <firstpublished>2017</firstpublished>
     <author>Dark Lizerd, XanMag, and K.V.</author>
     <aslversion>550</aslversion>
@@ -404,24 +404,15 @@
       FinishGame ("You have died!")
     </onhealthzero>
     <inituserinterface type="script"><![CDATA[
-      //Log("Running inituserinterface")
-      //Log("game.backgroundimage")
-      //Log(game.backgroundimage)
       JS.eval ("$('body').append('<style>@media only screen and (max-width: 956px) {#gamePanes, .game-stats {display: none !important;}}</style>');")
-      //Log("timeelapsed")
-      //Log(game.timeelapsed)
-      if (not game.timeelapsed = 0) {
-        UpdateContentsInLists
-        SetupSidenav
-      }
       JS.eval ("$(\"#txtCommand\").css(\"font-size\", \"16px\")")
       if (not StartsWith (GetFileURL (""), "quest")) {
         JS.eval ("ASLEvent ('AslSet', 'game.webplayer='" + isMobilePlayer().toString() + "');")
       }
-      //Log("checking game.pxui...")
       if (GetBoolean (game, "pxui")){
-        //Log("pxui is true")
         InitPxUi
+        UpdateContentsInLists
+        SetupSidenav
         SetBackgroundColour ("White")
         JS.setCss ("#gamePanes", "background:black")
         if (GetBoolean (game, "glitching")){
@@ -1171,7 +1162,7 @@
           <value>Reynard</value>
         </alt>
         <takemsg>He ducks under your hand, and spins out of reach. "Ha, Ha, too slow! You gotta be faster than that to catch Reynard the Fox!!" he taunts.</takemsg>
-        <who>"Don't you know!!!?? I am the reknowned Reynard the Fox!  Acquisionaire Extraordinaire!  Collector of fine arts and treasures!  At your service!" he says with a bow.</who>
+        <who><![CDATA["Don't you know!!!?? I am the renown Reynard the Fox!  <em>Acquisionaire Extraordinaire</em>!  Collector of fine arts and treasures!  At your service!" he says with a bow.]]></who>
         <treasure>"Why yes, yes indeed, I do collect treasures. Lots of treasures," replies Reynard.</treasure>
         <fight>"Why?  There is no need for that."</fight>
         <attack type="script"><![CDATA[
@@ -1480,7 +1471,7 @@
         <unlock>{once:You unlock the rabbits' true potential.}{notfirst:You've already unlocked the rabbits' potential.}</unlock>
         <untie>They're not tied together.</untie>
         <push>You nudge each rabbit a little with one foot.</push>
-        <move>{once:You ask the rabbits if they'd like you to help them move.  They just look at you quizically.}{notfirst:The rabbits don't need you to move them.}</move>
+        <move>{once:You ask the rabbits if they'd like you to help them move.  They just look at you quizzically.}{notfirst:The rabbits don't need you to move them.}</move>
         <usestandardverblist />
         <takemsg>You try to take them, but the rabbits move too quickly.</takemsg>
         <look type="script">
@@ -1496,8 +1487,8 @@
           <value>look at</value>
           <value>take</value>
         </displayverbs>
-        <who>"Don't you know!!!?? I am the renown Reynard the Fox, Aquisionair Extronair, Collector of fine arts and treasures, at your service!" he says with a bow.</who>
-        <treasure>"Why yes, indead I am after a certain treasure that you currently have, but I will soon relieve from you. I would ask, but what is the fun in that? After all, I am a thief, not a begger!" You try to remember what you have that could be so valuable.</treasure>
+        <who><![CDATA["Don't you know!!!?? I am the renown Reynard the Fox!  <em>Acquisionaire Extraordinaire</em>!  Collector of fine arts and treasures!  At your service!" he says with a bow.]]></who>
+        <treasure>"Why yes, indeed I am after a certain treasure that you currently have, but I will soon relieve from you. I would ask, but what is the fun in that? After all, I am a thief, not a beggar!" You try to remember what you have that could be so valuable.</treasure>
         <fight>"Sure, a duel it shall be!!! ON GUARD!" And with that, he swings his rapier again, then waits for your first move.</fight>
         <attackCount type="int">0</attackCount>
         <alt type="stringlist">
@@ -2170,7 +2161,7 @@
         ]]></item>
         <item key="dance dancing"><![CDATA[
           if (GetBoolean(XanMag, "aware")) {
-            msg ("\"I love my music,\" Xan says.  <br/><br/>He flashes a few dance moves that are in perfect rhthym to song streaming from his laptop.  <br/><br/>\"Pretty sweet, huh, Pix?\"  You're not sure if <i>sweet</i> is what you would call that, but you nod your head affirmatively anyway.  Xan smiles and returns to his distractions.")
+            msg ("\"I love my music,\" Xan says.  <br/><br/>He flashes a few dance moves that are in perfect rhythm to song streaming from his laptop.  <br/><br/>\"Pretty sweet, huh, Pix?\"  You're not sure if <i>sweet</i> is what you would call that, but you nod your head affirmatively anyway.  Xan smiles and returns to his distractions.")
           }
           else {
             msg ("XanMag seems startled by your voice and looks at you in surprise.<br/><br/>\"You... you're... you're actually a real person?\"  Xan cocks his head and looks at you a little closer.  \"Pix?  Is that you?  It has to be you.  You look like a Pixie.\"  You nod affirmatively and wonder if that was meant to be an insult.  <br/><br/>\"Never expected to actually talk to you face to face.  You are exactly as I imagined you being.\"  Again... you are unsure if that's a compliment, indifference, or an insult.  The smile on XanMag's face though tells you that he meant no harm by his foot-in-mouth approach to conversation.<br/><br/>\"Oh,\" Xan pauses, \"Totally forgot what you asked me.\"  With that, he returns to his tasks.")
@@ -3418,21 +3409,21 @@ Try entering: gamename Pixie Kicks Ass
     <exit name="DLN" alias="north" to="DL_Room">
       <inherit name="northdirection" />
       <lookonly type="boolean">false</lookonly>
-      <look>You start to wander to the north to see just how far the field extends when you suddently run smack into a clear wall. (You hear a snickering behind you) You examine the wall but discover that the view beyond is not painted on the wall, but is instead beyond it.</look>
+      <look>You start to wander to the north to see just how far the field extends when you suddenly run smack into a clear wall. (You hear a snickering behind you) You examine the wall but discover that the view beyond is not painted on the wall, but is instead beyond it.</look>
       <lockmessage>You start to wander to the north to see just how far the field extends when you suddenly run smack into a clear wall. (You hear a snickering behind you.) You examine the wall but discover that the view beyond is not painted on the wall, but is instead beyond it.</lockmessage>
       <locked />
     </exit>
     <exit name="DLE" alias="east" to="DL_Room">
       <inherit name="eastdirection" />
       <lookonly type="boolean">false</lookonly>
-      <look>You start to wander to the north to see just how far the field extends when you suddently run smack into a clear wall. (You hear a snickering behind you) You examine the wall but discover that the view beyond is not painted on the wall, but is instead beyond it.</look>
+      <look>You start to wander to the north to see just how far the field extends when you suddenly run smack into a clear wall. (You hear a snickering behind you) You examine the wall but discover that the view beyond is not painted on the wall, but is instead beyond it.</look>
       <locked />
       <lockmessage>You start to wander to the east to see just how far the field extends when you suddenly run smack into a clear wall. (You hear a snickering behind you.) You examine the wall but discover that the view beyond is not painted on the wall, but is instead beyond it.</lockmessage>
     </exit>
     <exit name="DLS" alias="south" to="DL_Room">
       <inherit name="southdirection" />
       <lookonly type="boolean">false</lookonly>
-      <look>You start to wander to the north to see just how far the field extends when you suddently run smack into a clear wall. (You hear a snickering behind you.) You examine the wall but discover that the view beyond is not painted on the wall, but is instead beyond it.</look>
+      <look>You start to wander to the north to see just how far the field extends when you suddenly run smack into a clear wall. (You hear a snickering behind you.) You examine the wall but discover that the view beyond is not painted on the wall, but is instead beyond it.</look>
       <locked />
       <lockmessage>You start to wander to the south to see just how far the field extends when you suddenly run smack into a clear wall. (You hear a snickering behind you.) You examine the wall but discover that the view beyond is not painted on the wall, but is instead beyond it.</lockmessage>
     </exit>
@@ -3477,7 +3468,7 @@ Try entering: gamename Pixie Kicks Ass
         }
       ]]></look>
       <object name="globe">
-        <takemsg>You reach for the globe, but your hand passes right through it. Altho you could not get it, it felt like you hand passed through a bubble of water, but you hand is still dry!</takemsg>
+        <takemsg>You reach for the globe, but your hand passes right through it. Although you could not get it, it felt like you hand passed through a bubble of water, but you hand is still dry!</takemsg>
         <scenery type="boolean">false</scenery>
         <usedefaultprefix />
         <look>It is a floating, spinning globe of a planet you don't recognize. There are strange land masses with large and small, blue oceans with green tint.</look>
@@ -4072,7 +4063,7 @@ Try entering: gamename Pixie Kicks Ass
             }
             else {
               firsttime {
-                msg ("Gal looks at you suspiciously.  \"I get the feeling you haven't found that post I accidentally misplaced.\"  She pulls her lips back in a show of embarassment.  Once you've taken a look at it, I can take your order.  Sorry,\" she says, \"put I don't have the time to read to you the nearly infinite selection of taps.\"  She smiles and returns to work.")
+                msg ("Gal looks at you suspiciously.  \"I get the feeling you haven't found that post I accidentally misplaced.\"  She pulls her lips back in a show of embarrassment.  Once you've taken a look at it, I can take your order.  Sorry,\" she says, \"put I don't have the time to read to you the nearly infinite selection of taps.\"  She smiles and returns to work.")
               }
               otherwise {
                 msg ("\"Sorry, but you'll need to select from that list presented in the post... that I lost.  Let me know when you've found it.\"")
@@ -4309,7 +4300,7 @@ Try entering: gamename Pixie Kicks Ass
         <value>fatty</value>
       </alt>
       <smoke type="script"><![CDATA[
-        msg ("You take a really long draw from the blunt, hold your breath, inhale again, and let out a fanciful stream of smoke in inexpicably complicated shapes.  <br/><br/>Whatever you focus your attention on now seems to slow and clarify.")
+        msg ("You take a really long draw from the blunt, hold your breath, inhale again, and let out a fanciful stream of smoke in inexplicably complicated shapes.  <br/><br/>Whatever you focus your attention on now seems to slow and clarify.")
         if (game.pov.parent = Quest Forum) {
           msg ("\"Whoa, Pix,\" Xan says.  You glance over at Xan through pinched eyelids.  \"That's damned impressive.\"  He gives you a thumbs up and returns to work.")
         }
@@ -4671,7 +4662,7 @@ Try entering: gamename Pixie Kicks Ass
         <pattern>feel;feel around;feel about;search</pattern>
         <script><![CDATA[
           if (not kv_lamp.hasbeenmoved) {
-            msg ("You feel around in the dark.<br/><br/>After a moment or two, just after abandoning any hopes of finding anything, something far off in the distance catches your eye.<br/><br/>It looks like a faraway flicker of light... <br/><br/>You strain to get a better look, but it is what it is: a faraway flicker.<br/><br/>Just as you begin to contemplate entering UNDO, you notice that the light is slowly growing nearer.<br/><br/>After just a few moments, a man with a lamp appears.<br/><br/>\"You've proven your worth just by making it this far,\" he says, and, now that he's close enough, you can see that it's none other than ALEX WARREN!<br><br> \"Don't let this darkness slow you down,\" says Alex.<br/><br/>He flashes a grin and passes you the {object:kv_lamp:lamp}.  \"You may as well take this,\" he says. \"It's a little buggy, and it switches itself off at random sometimes, but, besides that, it's a good lamp.\"<br/><br/>You take the {object:kv_lamp:lamp}, giving Alex a slight nod, and, with that, he says, \"cheers!\" and moves on to other things.<br/><br/>You wish Alex the best (as do we all), then you get back to the task at hand. Now that you have a light source (which, of course, just switched itself off), you're bound to {command:use lamp:use} it!")
+            msg ("You feel around in the dark.<br/><br/>After a moment or two, just after abandoning any hopes of finding anything, something far off in the distance catches your eye.<br/><br/>It looks like a faraway flicker of light... <br/><br/>You strain to get a better look, but it is what it is: a faraway flicker.<br/><br/>Just as you begin to contemplate entering UNDO, you notice that the light is slowly growing nearer.<br/><br/>After just a few moments, a man with a lamp appears.<br/><br/>\"You've proven your worth just by making it this far,\" he says, and, now that he's close enough, you can see that it's none other than Alex Warren!<br><br> \"Don't let this darkness slow you down,\" says Alex.<br/><br/>He flashes a grin and passes you the {object:kv_lamp:lamp}.  \"You may as well take this,\" he says. \"It's a little buggy, and it switches itself off at random sometimes, but, besides that, it's a good lamp.\"<br/><br/>You take the {object:kv_lamp:lamp}, giving Alex a slight nod, and, with that, he says, \"cheers!\" and moves on to other things.<br/><br/>You wish Alex the best (as do we all), then you get back to the task at hand. Now that you have a light source (which, of course, just switched itself off), you're bound to {command:use lamp:use} it!")
             MoveObject (kv_lamp, player)
             JS.setCommands (game.defcmds)
             JS.uiHide ("#commandPane")
@@ -4957,7 +4948,7 @@ Try entering: gamename Pixie Kicks Ass
       <beforefirstenter type="script">
       </beforefirstenter>
       <firstenter type="script"><![CDATA[
-        msg ("As the ostrapode glides effortlessy through the air, you look to the {command:go east:east} and spot Richard Headkid riding a flying carpet just before he disappears from view.")
+        msg ("As the ostrapode glides effortlessly through the air, you look to the {command:go east:east} and spot Richard Headkid riding a flying carpet just before he disappears from view.")
         SetTurnTimeoutID (2, "falling") {
           msg ("<br/>Suddenly, she seems to realize that she's defying the laws of gravity, and the ostrapode panics and begins to fling herself around, causing you to lose your grip from around her neck.<br/><br/>As you plummet towards impending doom, you wonder: 'Why, exactly, are these guys working on this shit instead of the REAL group project?'<br/><br/>Just then, reality flickers around you again.<br/><br/>You are still barrelling down through the sky, but you notice that you are no longer accompanied by the ostrapode. You swing your arms and legs in unison to spin yourself around, and you see a Land Rover just above you.<br/>You immediately wish you'd just stayed back in the hub and never gave The Dickhead Kid that damned disk in the first place.<br/><br/>Just as you realize how much of a waste <b><i>that</i></b> particular wish was, you decide it best to wish for one more thing, but the point quickly becomes moot as you and the Land Rover smash into a rocky promontory.<br/>")
           MoveObject (player, kv_Darkness)
@@ -7122,7 +7113,7 @@ Try entering: gamename Pixie Kicks Ass
             budsXM.visible = true
           }
           otherwise {
-            msg ("You are no weed-head.  Are you?  Either way... if you take any more, the cyber cops are likely to break into Xan's thoughts and panish you forever.")
+            msg ("You are no weed-head.  Are you?  Either way... if you take any more, the cyber cops are likely to break into Xan's thoughts and punish you forever.")
           }
         }
         else {
@@ -7183,7 +7174,7 @@ Try entering: gamename Pixie Kicks Ass
           msg ("He waves it away.  \"Sorry!  Can't get a good job if you touch that stuff!\"")
         </item>
         <item key="bartender">
-          msg ("Gal looks at you and winks.  \"If only, sweetheart, but I cannot.  I'm on the job!\"  She returns to working deligently behind the bar.")
+          msg ("Gal looks at you and winks.  \"If only, sweetheart, but I cannot.  I'm on the job!\"  She returns to working diligently behind the bar.")
         </item>
         <item key="GalGadotXM">
           msg ("\"And what should I do with that, good sir?  Roll it up and then we can talk.\"  She smiles and winks at you.")
@@ -7281,7 +7272,7 @@ Try entering: gamename Pixie Kicks Ass
       <look>It's a really sweet computer equipped with the most recent and sleekest updates and hardware.</look>
       <feature_usegive />
       <use type="script"><![CDATA[
-        msg ("A great coder like you <i>could</i> probably hack into this system, but this is XanMag's and the normal laws of computer programming don't apply here.  It is impentrable.")
+        msg ("A great coder like you <i>could</i> probably hack into this system, but this is XanMag's and the normal laws of computer programming don't apply here.  It is impenetrable.")
       ]]></use>
     </object>
     <object name="Dean Koontz Library XM">
