@@ -10,6 +10,7 @@
   <implied element="timer" property="interval" type="int" />
   <implied element="timer" property="script" type="script" />
   <implied element="turnscript" property="script" type="script" />
+  <!-- <include ref="EditorEnglish.aslx"/> -->
   <template name="DefaultXyzzy">{random:Surprisingly, absolutely nothing happens.:Your surroundings begin to fold in on themselves, but they immediately go right back to normal.:Wrong game!}</template>
   <template name="LanguageId">en</template>
   <template name="Again1">again</template>
@@ -293,15 +294,17 @@
   <dynamictemplate name="DefaultUntie">"You can't untie " + object.article + "."</dynamictemplate>
   <dynamictemplate name="DefaultUseOn">"You can't use " + object2.article + " that way."</dynamictemplate>
   <dynamictemplate name="DefaultWear">"You can't wear " + object.article + "."</dynamictemplate>
+  <!-- <include ref="Core.aslx"/> -->
   <delegate name="AddScript" parameters="object" type="" />
   <delegate name="AssociatedScope" parameters="" type="objectlist" />
   <game name="Pixie's Quest">
     <gameid>ba3a1705-de77-4b97-b22e-0800c1e2beb5</gameid>
-    <version>1.5.0.4</version>
+    <version>1.5.0.5</version>
     <firstpublished>2017</firstpublished>
     <author>Dark Lizerd, XanMag, and K.V.</author>
     <aslversion>550</aslversion>
-    <description><![CDATA[You must acquire and use your super-programming powers to complete this Quester's Quest of all Quests.<br/><br/>(This game is for The Pixie. Thanks for everything you do !)<br/><br/>---<br/>For Quest 5.7.2]]></description>
+    <description><![CDATA[You must acquire and use your super-programming powers to complete this Quester's Quest of all Quests.<br/><br/>This game is for The Pixie.<br/>
+    Thanks for everything you do!<br/>______________________________________________________<br/>Pixie's Quest<br/>by Dark Lizerd, XanMag, and K.V.<br/><br/>You must acquire and use your super-programming powers<br/>to complete this Quester's Quest of all Quests.<br/>--------<br/>v1.5.0.5<br/>--------<br/><br/>---------------<br/>For Quest 5.7.2]]></description>
     <showscore />
     <menufont>Source Sans Pro, Georgia, serif</menufont>
     <showhealth />

@@ -1,4 +1,4 @@
-﻿let pqJsVersion = "1.0.0";
+﻿let pqJsVersion = "1.0.1";
 
 var _animateScroll = false;
 
@@ -42,8 +42,9 @@ function setCommandBarStyle(style) {
 var saveClearedText = true;
 var clearedOnce = false;
 function clearScreen() {
+    $("#outputData").appendTo($("body"));
     if (!saveClearedText) {
-        $("#outputData").appendTo($("body"));
+        
         $("#divOutput").css("min-height", 0);
         $("#divOutput").html("");
         createNewDiv("left");
@@ -51,7 +52,7 @@ function clearScreen() {
         setTimeout(function () {
             $("html,body").scrollTop(0);
         }, 100);
-        $("#outputData").appendTo($("#divOutput"));
+        
     } else {
         $("#divOutput").append("<hr class='clearedAbove' />");
         if (!clearedOnce) {
@@ -67,6 +68,7 @@ function clearScreen() {
             $('html,body').scrollTop(0);
         }, 100);
     }
+    $("#outputData").appendTo($("#divOutput"));
 }
 
 function showScrollback() {
