@@ -1179,7 +1179,7 @@
         <scenery />
       </object>
       <command name="kv_nosave1">
-        <pattern>zsave</pattern>
+        <pattern>save</pattern>
         <script>
           msg ("You can't save the game during the intro.")
         </script>
@@ -1205,7 +1205,7 @@
         <scenery />
       </object>
       <command name="kv_nosave2">
-        <pattern>zsave</pattern>
+        <pattern>save</pattern>
         <script>
           msg ("You can't save the game during the intro.")
         </script>
@@ -1247,7 +1247,7 @@
         <look>It's coarse and brown.</look>
       </object>
       <command name="kv_nosave3">
-        <pattern>zsave</pattern>
+        <pattern>save</pattern>
         <script>
           msg ("You can't save the game during the intro.")
         </script>
@@ -1302,7 +1302,7 @@
         <look><![CDATA[There is nothing special up there.<br/>]]></look>
       </object>
       <command name="kv_nosave4">
-        <pattern>zsave</pattern>
+        <pattern>save</pattern>
         <script>
           msg ("You can't save the game during the intro.")
         </script>
@@ -1574,8 +1574,8 @@
       ClearScreen
       InitPxUi
       SetBackgroundOpacity(0.8)
-      PrintCentered ("{command:clear then look:<br/><img width=\"10%\" src=\"" + GetFileURL("px_avatar.png") + "\"  onload=\"$(this).fadeIn(10000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" /><br/><br/><br/><img src=\"" + GetFileURL("titlesplash.png")  + "\"  onload=\"$(this).fadeIn(1500);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" /><br/><br/><img onclick=\"ASLEvent('HandleNavCmdClick', 'l');\" src=\"" + GetFileURL("Initialising.png")  + "\"  onload=\"$(this).fadeOut(5500);\" /><br/></center><br/>}")
-      PrintCentered ("<span>  {command:clear then look:<img src=\"" + GetFileURL("anykeytocontinue.png") + "\" id=\"titleimage\" onload=\"$(this).fadeIn(10000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" />}</span>")
+      PrintCentered ("<div onclick=\"sendEndWait()\"><br/><img width=\"10%\" src=\"" + GetFileURL("px_avatar.png") + "\"  onload=\"$(this).fadeIn(10000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" /><br/><br/><br/><img src=\"" + GetFileURL("titlesplash.png")  + "\"  onload=\"$(this).fadeIn(1500);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" /></div><br/><br/><img onclick=\"ASLEvent('HandleNavCmdClick', 'l');\" src=\"" + GetFileURL("Initialising.png")  + "\"  onload=\"$(this).fadeOut(5500);\" /><br/></center><br/>")
+      PrintCentered ("<span onclick=\"sendEndWait()\">  <img src=\"" + GetFileURL("anykeytocontinue.png") + "\" id=\"titleimage\" onload=\"$(this).fadeIn(10000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" /></span>")
       wait {
         MoveObject (player, startingup2)
       }
@@ -1618,7 +1618,7 @@
         JS.uiHide ("#txtCommand")
         PrintCentered ("{command:look:<br/><img src=\"" + GetFileURL("px_avatar.png")  + "\" id=\"titleimage\" onload=\"$(this).fadeIn(300);\" style=\"box-shadow:0px 0px 15px 5px #fac4ff;display:none\" /><br/><br/>}")
         PrintCentered ("<span style=\"font-size:260%\">{game.gamename}</span><br/><span style=\"font-size:145%\">by {game.author}</span><br/>")
-        msg ("{command:clear then look:<span><center>This game is for The Pixie. Thanks for everything you do!</center><br><hr/><br></span>}")
+        msg ("{<span onclick=\"sendEndWait()\"><center>This game is for The Pixie. Thanks for everything you do!</center><br><hr/><br></span>")
         msg ("")
         PrintCentered ("<span style=\"background:#296231;padding:6px;box-shadow:0px 0px 15px 5px #fac4ff;;text-shadow:0 0 4px black\"><b>    <span onclick=\"sendEndWait()\">{colour:#fac4ff:PRESS ANY KEY TO BEGIN}</span></b></span><br/>")
         wait {
@@ -1814,8 +1814,13 @@
                 list add (scrollsin, GetDisplayAlias(scroll))
               }
             }
-            ShowMenu ("Known Spells:", scrollsin, true) {
-              HandleSingleCommand ("x " + result)
+            if (ListCount(scrollsin) > 0){
+              ShowMenu ("Known Spells:", scrollsin, true) {
+                HandleSingleCommand ("x " + result)
+              }
+            }
+            else {
+              msg ("You haven't copied any scrolls to it yet.")
             }
           }
           else {
@@ -2880,7 +2885,7 @@
       </hintlist>
       <pushable />
       <push>You push it a little.  It barely moves.</push>
-      <takemsg>You'd rather not touch it.{once:  It's the opposite of clean.)}</takemsg>
+      <takemsg>You'd rather not touch it.{once:  (It's the opposite of clean.)}</takemsg>
       <look type="script">
         if (Richard Headkid.parent = Quest Forum) {
           msg ("\"Sorry, Pix,\" says RH before you can get a good look. \"That's top secret stuff, right there!\"")
@@ -3439,6 +3444,7 @@ Try entering: gamename Pixie Kicks Ass
     </object>
     <object name="papers">
       <inherit name="plural" />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
       <inroomdescription type="string"></inroomdescription>
       <take type="boolean">false</take>
       <takemsg>You reach for the paper, but a long green arm snatches it first. "Thanks, I was looking for that one," he says.</takemsg>
@@ -3587,7 +3593,10 @@ Try entering: gamename Pixie Kicks Ass
     <object name="DL_Bast">
       <inherit name="female" />
       <alias>creature</alias>
-      <look>You look over the rather short, tan fur covered, cat-like creature. She is wearing a simple leather skirt with wide straps that go over her shoulders. There is another leather piece connecting the straps that covers her chest. You notice her watching you intently, and it kinda makes you nervous, but you are not sure why. Maybe it is the way her tail slowly swings from side to side. You almost expect her to jump you at any moment.</look>
+      <look type="script">
+        msg("You look over the rather short, tan fur covered, cat-like creature. She is wearing a simple leather skirt with wide straps that go over her shoulders. There is another leather piece connecting the straps that covers her chest. You notice her watching you intently, and it kinda makes you nervous, but you are not sure why. Maybe it is the way her tail slowly swings from side to side. You almost expect her to jump you at any moment.")
+        this.prefix = "the"
+      </look>
       <alt type="stringlist">
         <value>cat</value>
         <value>cat person</value>
@@ -3596,7 +3605,6 @@ Try entering: gamename Pixie Kicks Ass
       <takemsg>You reach for her, but she hisses and backs up, placing the desk between you and her. "That was a warning, maybe after she knows you better you could do that," DL says. "Otherwise, she could be very affectionate."</takemsg>
       <visible />
       <listalias>creature</listalias>
-      <usedefaultprefix type="boolean">false</usedefaultprefix>
       <displayverbs type="stringlist">
         <value>Look at</value>
         <value>Speak to</value>
