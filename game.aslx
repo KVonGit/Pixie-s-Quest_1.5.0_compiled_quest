@@ -299,7 +299,7 @@
   <delegate name="AssociatedScope" parameters="" type="objectlist" />
   <game name="Pixie's Quest">
     <gameid>ba3a1705-de77-4b97-b22e-0800c1e2beb5</gameid>
-    <version>1.5.0.9</version>
+    <version>1.5.0.9.1</version>
     <firstpublished>2017</firstpublished>
     <author>Dark Lizerd, XanMag, and K.V.</author>
     <aslversion>550</aslversion>
@@ -1950,44 +1950,6 @@
     ]]></enter>
     <firstenter type="script"><![CDATA[
       AddQuest (XanMag, "helpXan", "Help XanMag out with a thing or few.")
-      game.notfirstinituserinterface => {
-        JS.setDivCount (ToInt(game.lastoutputbeforesave) * 3)
-        if (not StartsWith (GetFileURL (""), "quest")) {
-          SetTimeout (2) {
-            JS.updateLocation (game.locationmsg)
-          }
-        }
-        game.classiclocation = false
-        JS.eval ("$('div#commandPane').insertBefore('#inventoryLabel')")
-        JS.setPanes ("black", "white")
-        JS.setCommands ("Look;Get All;UNDO;Wait;Save;ClearScreen;Panes", "black")
-        JS.setCss ("#gamePanes", "background:black")
-        JS.setPanes ("black", "white")
-        JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 5px 5px #296231;")
-        JS.setCss ("#location, #status, .ui-widget-header", "background-color:#296231;border:1px solid #296231;background-image:none;")
-        JS.setPanes ("black", "white")
-        JS.setCommands ("Look;Get All; UNDO;Save;Clear the screen;Wait;Hide Panes")
-        JS.setCss ("#location", "background:#296231")
-        JS.setCss ("#status", "background-image:none;")
-        JS.setCss ("#status.ui-widget-header", "background:#296231;")
-        JS.setCss ("#status", "border:1px solid;")
-        JS.setCss ("#gameBorder", "box-shadow:0px 0px 15px 5px black;")
-        JS.setCss ("body", "background-color:#296231")
-        JS.setCss ("#gameContent", "background-color:white")
-        JS.setCss ("#gamePanes", "background:black")
-        JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 5px 5px #296231;")
-        JS.setCss ("#location, #status, .ui-widget-header", "background-color:#296231;border:1px solid #296231;background-image:none;")
-        game.defaultbackground = "White"
-        SetBackgroundImage ("")
-        this.beforeenter => {
-          JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 5px 5px #296231;")
-          JS.setCss ("#location, #status, .ui-widget-header", "background-color:#296231;border:1px solid #296231;background-image:none;")
-          SetBackgroundColour ("White")
-          SetBackgroundImage ("")
-          JS.setCss ("body", "background:#296231")
-          JS.setCss ("#gameContent", "background:white")
-        }
-      }
       alertCheck
     ]]></firstenter>
     <beforefirstenter type="script">
@@ -4655,7 +4617,8 @@ Try entering: gamename Pixie Kicks Ass
         <pattern>feel;feel around;feel about;search</pattern>
         <script><![CDATA[
           if (not kv_lamp.hasbeenmoved) {
-            msg ("You feel around in the dark.<br/><br/>After a moment or two, just after abandoning any hopes of finding anything, something far off in the distance catches your eye.<br/><br/>It looks like a faraway flicker of light... <br/><br/>You strain to get a better look, but it is what it is: a faraway flicker.<br/><br/>Just as you begin to contemplate entering UNDO, you notice that the light is slowly growing nearer.<br/><br/>After just a few moments, a man with a lamp appears.<br/><br/>\"You've proven your worth just by making it this far,\" he says, and, now that he's close enough, you can see that it's none other than Alex Warren!<br><br> \"Don't let this darkness slow you down,\" says Alex.<br/><br/>He flashes a grin and passes you the {object:kv_lamp:lamp}.  \"You may as well take this,\" he says. \"It's a little buggy, and it switches itself off at random sometimes, but, besides that, it's a good lamp.\"<br/><br/>You take the {object:kv_lamp:lamp}, giving Alex a slight nod, and, with that, he says, \"cheers!\" and moves on to other things.<br/><br/>You wish Alex the best (as do we all), then you get back to the task at hand. Now that you have a light source (which, of course, just switched itself off), you're bound to {command:use lamp:use} it!")
+            msg ("You feel around in the dark.<br/><br/>After a moment or two, just after abandoning any hopes of finding anything, something far off in the distance catches your eye.<br/><br/>It looks like a faraway flicker of light... <br/><br/>You strain to get a better look, and that's all it is: a faraway flicker.<br/><br/>Just as you begin to contemplate entering UNDO, you notice that the light is slowly growing nearer.<br/><br/>After just a few moments, a man with a lamp appears.<br/>")
+            msg("\"You've proven your worth just by making it this far,\" he says, and, now that he's close enough, you can see that it's none other than Alex Warren!<br><br> \"Don't let this darkness slow you down,\" says Alex.<br/><br/>He flashes a grin and passes you the {object:kv_lamp:lamp}.  \"You may as well take this,\" he says. \"It's a little buggy. Tends to switch itself off randomly, but, besides that, it's a good lamp.\"<br/><br/>You take the {object:kv_lamp:lamp}, giving Alex a slight nod, and, with that, he says, \"cheers!\" and moves on to other things.<br/><br/>You wish Alex the best (as do we all), then you get back to the task at hand. Now that you have a light source (which, of course, just switched itself off), you're bound to {command:use lamp:use} it!")
             MoveObject (kv_lamp, player)
             JS.setCommands (game.defcmds)
             JS.uiHide ("#commandPane")
@@ -13647,6 +13610,7 @@ Try entering: gamename Pixie Kicks Ass
     game.defaultbackground = "White"
     SetBackgroundImage ("")
     SetBackgroundColour ("White")
+    alertCheck
   </function>
   <javascript src="pqstuff.js" />
 </asl>
