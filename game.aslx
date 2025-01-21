@@ -299,7 +299,7 @@
   <delegate name="AssociatedScope" parameters="" type="objectlist" />
   <game name="Pixie's Quest">
     <gameid>ba3a1705-de77-4b97-b22e-0800c1e2beb5</gameid>
-    <version>1.5.0.8</version>
+    <version>1.5.0.9</version>
     <firstpublished>2017</firstpublished>
     <author>Dark Lizerd, XanMag, and K.V.</author>
     <aslversion>550</aslversion>
@@ -405,30 +405,8 @@
     </onhealthzero>
     <inituserinterface type="script"><![CDATA[
       JS.eval ("$('body').append('<style>@media only screen and (max-width: 956px) {#gamePanes, .game-stats {display: none !important;}}</style>');")
+
       JS.eval ("$(\"#txtCommand\").css(\"font-size\", \"16px\")")
-      if (not StartsWith (GetFileURL (""), "quest")) {
-        JS.eval ("ASLEvent ('AslSet', 'game.webplayer='" + isMobilePlayer().toString() + "');")
-      }
-      else {
-        game.online = false
-      }
-      InitPxUi("")
-      UpdateContentsInLists
-      SetupSidenav
-      SetBackgroundColour ("White")
-      JS.setCss ("#gamePanes", "background:black")
-      if (not StartsWith(GetFileURL(""), "quest")){
-        SetTimeout(2){
-          InitPxUi("")
-          UpdateContentsInLists
-          SetupSidenav
-          SetBackgroundColour ("White")
-          JS.setCss ("#gamePanes", "background:black")
-        }
-      }
-      if (HasScript (game, "xminituserinterface")){
-        invoke (game.xminituserinterface)
-      }
       SetTimeout(2){
         if (GetBoolean (game, "glitching")){
           do (kv_glitch, "glitching")
@@ -436,6 +414,23 @@
         if (GetBoolean (game, "took_glitch")){
           request (Show, "Location")
           statusmove
+        }
+      }
+      
+      if (game.pov.parent = kv_Darkness){
+        JS.uiShow ("#commandPane")
+        JS.setCommands ("Feel around")
+      }
+      else {
+        JS.uiHide ("#commandPane")
+      }
+      
+      if (GetBoolean (Quest Forum, "visited")){
+        InitPxUi
+        if (not StartsWith (GetFileURL (""), "quest")){
+          SetTimeout(2){
+            InitPxUi
+          }
         }
       }
     ]]></inituserinterface>
@@ -1333,7 +1328,7 @@
         JS.eval ("var scrollToEndBak1 = scrollToEnd;scrollToEnd = function(){};")
         if (game.pov = player1) {
           game.menuoutputsection = StartNewOutputSection()
-          JS.addText (ProcessText("You sit upright in your bed, breathing hard and clutching your chest! Your covers are scattered around your bed, and your pillow is on your dresser on the other side of the room.  After a few moments, you settle down and push the button on your alarm clock, at which point, the beeping stops.<br/><br/>You get up, get dressed and notice a piece of paper on the floor, which you pick up and read...<br/><b><samp>\"Quest Towers, 3rd floor, 12:00 noon.\"</samp></b><br/><br/>You flip the note over again looking for any other clues. Finding none, you wad up the note and throw it in the trashcan... then you remember the party last night. The group you work with said they almost had the project finished, but they needed your final run through -- your input on a couple of problems they were having.<br/><br/>Looking at your clock, you realize you only have about 30 minutes to get there on time. So, you grab your inventory items, you rush out the door, grab a passing taxi, and arrive at the Quest Towers with 10 minutes to spare.<br/><br/>{command:look:<center>" + game.tower + "<center><br/><b>PRESS ANY KEY TO CONTINUE</b>}"))
+          JS.addText (ProcessText("You sit upright in your bed, breathing hard and clutching your chest! Your covers are scattered around your bed, and your pillow is on your dresser on the other side of the room.  After a few moments, you settle down and push the button on your alarm clock, at which point, the beeping stops.<br/><br/>You get up, get dressed and notice a piece of paper on the floor, which you pick up and read...<br/><b><samp>\"Quest Towers, 3rd floor, 12:00 noon.\"</samp></b><br/><br/>You flip the note over again looking for any other clues. Finding none, you wad up the note and throw it in the trashcan... then you remember the party last night. The group you work with said they almost had the project finished, but they needed your final run through -- your input on a couple of problems they were having.<br/><br/>Looking at your clock, you realize you only have about 30 minutes to get there on time. So, you grab your inventory items, you rush out the door, grab a passing taxi, and arrive at the Quest Towers with 10 minutes to spare.<br/><br/><span onclick=\"sendEndWait()\"><center>" + game.tower + "<center></span><br/><span onclick=\"sendEndWait()\"><b>PRESS ANY KEY TO CONTINUE</b></span>"))
           EndOutputSection (game.menuoutputsection)
           wait {
             JS.eval ("var scrollToEnd = scrollToEndBak1;scrollToEndBak1 = null;")
@@ -1584,7 +1579,11 @@
     </description>
     <enter type="script"><![CDATA[
       ClearScreen
-      InitPxUi("")
+      JS.setBackground ("black")
+      SetBackgroundImage ("px_avatar.png")
+      SetBackgroundColour ("black")
+      JS.setCss ("#gameBorder", "box-shadow:0px 0px 15px 5px #fac4ff;")
+      JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 2px 2px #296231;")
       SetBackgroundOpacity(0.8)
       PrintCentered ("<div onclick=\"sendEndWait()\"><br/><img width=\"10%\" src=\"" + GetFileURL("px_avatar.png") + "\"  onload=\"$(this).fadeIn(10000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" /><br/><br/><br/><img src=\"" + GetFileURL("titlesplash.png")  + "\"  onload=\"$(this).fadeIn(1500);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" /></div><br/><br/><img onclick=\"ASLEvent('HandleNavCmdClick', 'l');\" src=\"" + GetFileURL("Initialising.png")  + "\"  onload=\"$(this).fadeOut(5500);\" /><br/></center><br/>")
       PrintCentered ("<span onclick=\"sendEndWait()\">  <img src=\"" + GetFileURL("anykeytocontinue.png") + "\" id=\"titleimage\" onload=\"$(this).fadeIn(10000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" /></span>")
@@ -1613,7 +1612,7 @@
       AddQuest (DarkLizerd, "Visit Dark Lizerds room", "Visit Dark Lizerd's world")
       AddQuest (KV, "KVs_World", "Visit KV's gateway.")
       JS.setCommands ("Look;Get all;UNDO;Wait;Save;ClearScreen;Panes;Hints", "black")
-      JS.setCss ("#gameContent", "background:url('" + GetFileURL("qdk-background.jpg") + "');")
+      //JS.setCss ("#gameContent", "background:url('" + GetFileURL("qdk-background.jpg") + "');")
       JS.uiHide ("#txtCommand")
       game.parserignoreprefixes = Split("a;an;the;fucking;damn;damned;the fucking;the damn;the damned", ";")
     </beforeenter>
@@ -1641,14 +1640,12 @@
           JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 5px 5px #296231;display:block;")
           ClearScreen
           PrintCentered ("")
-          game.backgroundimage = ""
+          SetBackgroundImage("")
           MoveObject (player, Quest Forum)
           UpdateContentsInLists
           JS.uiShow ("#gamePanes")
         }
       ]]></description>
-      <beforeenter type="script">
-      </beforeenter>
     </object>
     <object name="player">
       <alias>The Pixie</alias>
@@ -1953,9 +1950,9 @@
     ]]></enter>
     <firstenter type="script"><![CDATA[
       AddQuest (XanMag, "helpXan", "Help XanMag out with a thing or few.")
-      game.xminituserinterface => {
+      game.notfirstinituserinterface => {
         JS.setDivCount (ToInt(game.lastoutputbeforesave) * 3)
-        if (game.online) {
+        if (not StartsWith (GetFileURL (""), "quest")) {
           SetTimeout (2) {
             JS.updateLocation (game.locationmsg)
           }
@@ -1966,7 +1963,6 @@
         JS.setCommands ("Look;Get All;UNDO;Wait;Save;ClearScreen;Panes", "black")
         JS.setCss ("#gamePanes", "background:black")
         JS.setPanes ("black", "white")
-        JS.addText (game.css)
         JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 5px 5px #296231;")
         JS.setCss ("#location, #status, .ui-widget-header", "background-color:#296231;border:1px solid #296231;background-image:none;")
         JS.setPanes ("black", "white")
@@ -1982,17 +1978,15 @@
         JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 5px 5px #296231;")
         JS.setCss ("#location, #status, .ui-widget-header", "background-color:#296231;border:1px solid #296231;background-image:none;")
         game.defaultbackground = "White"
-        JS.setCss ("html, body", "background-image:none")
-        oe => {
+        SetBackgroundImage ("")
+        this.beforeenter => {
           JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 5px 5px #296231;")
           JS.setCss ("#location, #status, .ui-widget-header", "background-color:#296231;border:1px solid #296231;background-image:none;")
           SetBackgroundColour ("White")
-          SetBackgroundColour ("White")
-          JS.setCss ("html, body", "background-image:none")
+          SetBackgroundImage ("")
           JS.setCss ("body", "background:#296231")
           JS.setCss ("#gameContent", "background:white")
         }
-        game.pov.parent.beforeenter = oe
       }
       alertCheck
     ]]></firstenter>
@@ -2003,7 +1997,6 @@
       }
       JS.setCss ("body", "background-color:#296231")
       JS.setCss ("#gamePanes", "background-color:black")
-      // JS.setCss ("#commandPane", "display:block")
       SetupSidenav
       JS.setCss ("#status", "display:block")
       JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 5px 5px #296231;")
@@ -3066,35 +3059,6 @@ Try entering: gamename Pixie Kicks Ass
           <value>Switch on</value>
           <value>Switch off</value>
         </inventoryverbs>
-      </object>
-      <object name="rh_numberspic">
-        <inherit name="kvtype" />
-        <take />
-        <alias>strange PNG</alias>
-        <feature_usegive />
-        <hintlist type="stringlist">
-          <value>Hint 1:  Have you tried using it?</value>
-          <value>Hint 2:  Yeah... Using it is pointless.  Try dropping it.</value>
-        </hintlist>
-        <look type="script"><![CDATA[
-          // picture ("rh_zv.png")
-          msg ("<img src=\"" + GetFileURL("rh_zv.png") + "\" />")
-        ]]></look>
-        <ondrop type="script"><![CDATA[
-          msg ("<img src=\"" + GetFileURL("rh_.png") + "\" />")
-          RemoveObject (rh_numberspic)
-          MoveObjectHere (rh_pic)
-          msg ("<br/>Now that you look at the picture from here, you can see it for what it is! It's RH!<br/>(He's an ASCII character!)")
-          firsttime {
-            IncreaseScore (1)
-            list add (game.scoreList, "Dropped the strange PNG: 1 point")
-            msg ("<center><b>[  YOUR SCORE HAS INCREASED BY 1  ]</b></center>")
-          }
-        ]]></ondrop>
-        <use type="script"><![CDATA[
-          msg ("You attempt to use the strange PNG as a towel, but, just before you suck on one corner, you realize there are no nutrients in the corner of the PNG...<br/>")
-          msg ("...maybe you should just drop it...<br/>")
-        ]]></use>
       </object>
     </object>
     <object name="px_blue_telemat_booth">
@@ -5701,17 +5665,7 @@ Try entering: gamename Pixie Kicks Ass
         msg ("<img src='" + GetFileURL("timepost.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/u_n5otugokquhpmnu0bdzw/how-do-i-get-time-to-work#d57928f9-27c4-4a93-9083-5892fc1d9cd8\">View this post in your browser.</a>")
       ]]></fav>
     </object>
-    <object name="rh_pic">
-      <inherit name="kvtype" />
-      <alias>picture of RH</alias>
-      <take />
-      <hintlist type="stringlist">
-        <value>Hint 1:  Examine it.  (That's all you can really do.)</value>
-      </hintlist>
-      <look type="script">
-        picture ("rh_.png")
-      </look>
-    </object>
+
     <object name="kv_complete_alert">
       <alias>ALERT: KV's world completed!</alias>
       <displayverbs type="stringlist">
@@ -6903,9 +6857,9 @@ Try entering: gamename Pixie Kicks Ass
       switch (game.gamename) {
         case ("Pixie Kicks Ass") {
           firsttime {
-            IncreaseScore (1)
-            list add (game.scoreList, "Changed the game's name to Pixie Kicks Ass: 1 point")
-            msg ("<center>{b:[ Your score has increased by 1. ]}</center>")
+            IncreaseScore (2)
+            list add (game.scoreList, "Changed the game's name to Pixie Kicks Ass: 2 points")
+            msg ("<center>{b:[ Your score has increased by 2. ]}</center>")
           }
         }
       }
@@ -11652,7 +11606,15 @@ Try entering: gamename Pixie Kicks Ass
     JS.console.log(text)
   </function>
   <function name="SetBackgroundImage" parameters="filename">
-    JS.SetBackgroundImage (GetFileURL(filename))
+    filename = Trim(filename)
+    if (not filename = "") {
+      //JS.SetBackgroundImage (GetFileURL(filename))
+      url = GetFileURL (filename)
+      JS.eval("$(\"body\").css(\"background-image\", \"url(" + url + ")\");")
+    }
+    else {
+      JS.eval("$(\"body\").css(\"background-image\", \"none\");")
+    }
     game.backgroundimage = filename
   </function>
   <function name="SetBackgroundOpacity" parameters="opacity">
@@ -13651,14 +13613,40 @@ Try entering: gamename Pixie Kicks Ass
     CheckDarkness
     UpdateObjectLinks
   </function>
-  <function name="InitPxUi" parameters="unused">
-    JS.setBackground ("black")
-    SetBackgroundImage ("px_avatar.png")
+  <function name="InitPxUi">
+    UpdateContentsInLists
+    SetupSidenav
+    JS.eval ("$('#location').css('background', '#296231')")
+    JS.eval ("$('#commandPane').insertBefore($('#inventoryLabel'))")
+    JS.setPanes ("black", "white")
+    JS.setCss ("#gamePanes", "background:black")
+    SetForegroundColour ("Black")
+    JS.setCss ("#divOutput", "background:white")
     SetBackgroundOpacity (1.0)
-    SetBackgroundColour ("black")
-    JS.setCss ("#gameBorder", "box-shadow:0px 0px 15px 5px #fac4ff;")
-    JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 2px 2px #296231;")
-    game.pxui = true
+    JS.uiShow ("#location")
+    JS.uiShow ("#txtCommand")
+    JS.setCss ("#status", "display:block")
+    JS.eval ("$('#statusVarsLabel,#statusVarsAccordion').remove();")
+    JS.eval ("$('#status').css('max-height','none');")
+    game.classiclocation = false
+    JS.eval ("$('div#commandPane').insertBefore('#inventoryLabel')")
+    JS.setCommands ("Look;Get All;UNDO;Wait;ClearScreen;Panes", "black")
+    JS.setCss ("#gamePanes", "background:black")
+    JS.setPanes ("black", "white")
+    JS.setCommands ("Look;Get All;Save;UNDO;Clear the screen;Wait;Hide Panes;Hints")
+    JS.setCss ("#location", "background:#296231")
+    JS.setCss ("#status", "background-image:none;")
+    JS.setCss ("#status.ui-widget-header", "background:#296231;")
+    JS.setCss ("#status", "border:1px solid;")
+    JS.setCss ("#gameBorder", "box-shadow:0px 0px 15px 5px black;")
+    JS.setCss ("body", "background-color:#296231")
+    JS.setCss ("#gameContent", "background-color:white")
+    JS.setCss ("#gamePanes", "background:black")
+    JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 5px 5px #296231;display:block;")
+    JS.setCss ("#location, #status, .ui-widget-header", "background-color:#296231;border:1px solid #296231;background-image:none;")
+    game.defaultbackground = "White"
+    SetBackgroundImage ("")
+    SetBackgroundColour ("White")
   </function>
   <javascript src="pqstuff.js" />
 </asl>
