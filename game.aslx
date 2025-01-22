@@ -299,7 +299,7 @@
   <delegate name="AssociatedScope" parameters="" type="objectlist" />
   <game name="Pixie's Quest">
     <gameid>ba3a1705-de77-4b97-b22e-0800c1e2beb5</gameid>
-    <version>1.5.0.9.1</version>
+    <version>1.5.0.9.2</version>
     <firstpublished>2017</firstpublished>
     <author>Dark Lizerd, XanMag, and K.V.</author>
     <aslversion>550</aslversion>
@@ -426,10 +426,10 @@
       }
       
       if (GetBoolean (Quest Forum, "visited")){
-        InitPxUi
+        InitPxUi_kv
         if (not StartsWith (GetFileURL (""), "quest")){
           SetTimeout(2){
-            InitPxUi
+            InitPxUi_kv
           }
         }
       }
@@ -13576,7 +13576,7 @@ Try entering: gamename Pixie Kicks Ass
     CheckDarkness
     UpdateObjectLinks
   </function>
-  <function name="InitPxUi">
+  <function name="InitPxUi_kv">
     UpdateContentsInLists
     SetupSidenav
     JS.eval ("$('#location').css('background', '#296231')")
