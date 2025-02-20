@@ -299,7 +299,7 @@
   <delegate name="AssociatedScope" parameters="" type="objectlist" />
   <game name="Pixie's Quest">
     <gameid>ba3a1705-de77-4b97-b22e-0800c1e2beb5</gameid>
-    <version>1.5.0.9.2</version>
+    <version>1.5.0.9.3</version>
     <firstpublished>2017</firstpublished>
     <author>Dark Lizerd, XanMag, and K.V.</author>
     <aslversion>550</aslversion>
@@ -1343,7 +1343,7 @@
           wait {
             JS.eval ("var scrollToEnd = scrollToEndBak1;scrollToEndBak1 = null;")
             ClearScreen
-            JS.goUrl ("https://media.textadventures.co.uk/games/cNFLuCu1cUqmUv0I9_KEIQ/index.html")
+            JS.goUrl ("https://textadventures.co.uk/games/play/h-zmbs0bgucii5hvhz_akq")
             MoveObject (player, kv_EndGameRoom)
           }
         }
@@ -4496,7 +4496,7 @@ Try entering: gamename Pixie Kicks Ass
     <pattern>credits</pattern>
     <script><![CDATA[
       msg ("<center><h2>Written, Edited, Recorded, Coded, Produced, and Directed by:</h2><b>THE QUEST FORUM:</b><br/>DarkLizerd<br/>XanMag<br/>K.V.<br/><br/><h3>Beta-tested by:<br/>Pertex</h3><br/><br/><h2>Starring:</h2><h1 style=\"font-size:400%\">The Pixie</h1><br/><br/><h3>...and The Quest Forum<h3></center><br/>")
-      DisplayHttpLink ("View the complete credit roll at textadventures.co.uk", "https://media.textadventures.co.uk/games/cNFLuCu1cUqmUv0I9_KEIQ/index.html", false)
+      DisplayHttpLink ("View the complete credit roll at textadventures.co.uk", "https://textadventures.co.uk/games/play/h-zmbs0bgucii5hvhz_akq", false)
       game.suppressturnscripts = true
     ]]></script>
   </command>
@@ -4618,7 +4618,7 @@ Try entering: gamename Pixie Kicks Ass
         <script><![CDATA[
           if (not kv_lamp.hasbeenmoved) {
             msg ("You feel around in the dark.<br/><br/>After a moment or two, just after abandoning any hopes of finding anything, something far off in the distance catches your eye.<br/><br/>It looks like a faraway flicker of light... <br/><br/>You strain to get a better look, and that's all it is: a faraway flicker.<br/><br/>Just as you begin to contemplate entering UNDO, you notice that the light is slowly growing nearer.<br/><br/>After just a few moments, a man with a lamp appears.<br/>")
-            msg("\"You've proven your worth just by making it this far,\" he says, and, now that he's close enough, you can see that it's none other than Alex Warren!<br><br> \"Don't let this darkness slow you down,\" says Alex.<br/><br/>He flashes a grin and passes you the {object:kv_lamp:lamp}.  \"You may as well take this,\" he says. \"It's a little buggy. Tends to switch itself off randomly, but, besides that, it's a good lamp.\"<br/><br/>You take the {object:kv_lamp:lamp}, giving Alex a slight nod, and, with that, he says, \"cheers!\" and moves on to other things.<br/><br/>You wish Alex the best (as do we all), then you get back to the task at hand. Now that you have a light source (which, of course, just switched itself off), you're bound to {command:use lamp:use} it!")
+            msg("\"You've proven your worth just by making it this far,\" he says, and, now that he's close enough, you can see that it's none other than Bob, from the tutorial game!<br><br> \"Don't let this darkness slow you down,\" says Bob.<br/><br/>He flashes a grin and passes you the {object:kv_lamp:lamp}.  \"You may as well take this,\" he says. \"It's a little buggy. Tends to switch itself off randomly, but, besides that, it's a good lamp.\"<br/><br/>You take the {object:kv_lamp:lamp}, giving Bob a slight nod, and, with that, he says, \"cheers!\" and heads back towards the lounge.<br/><br/>Now that you have a light source (which, of course, just switched itself off), you're bound to {command:use lamp:use} it!")
             MoveObject (kv_lamp, player)
             JS.setCommands (game.defcmds)
             JS.uiHide ("#commandPane")
