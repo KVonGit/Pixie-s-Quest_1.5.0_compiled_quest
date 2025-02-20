@@ -299,7 +299,7 @@
   <delegate name="AssociatedScope" parameters="" type="objectlist" />
   <game name="Pixie's Quest">
     <gameid>ba3a1705-de77-4b97-b22e-0800c1e2beb5</gameid>
-    <version>1.5.0.9.3</version>
+    <version>1.5.0.9.4</version>
     <firstpublished>2017</firstpublished>
     <author>Dark Lizerd, XanMag, and K.V.</author>
     <aslversion>550</aslversion>
@@ -442,6 +442,7 @@
     <start type="script">
       UpdateContentsInLists
       FilterTakeDisplayVerbs
+	  disk.generatedverbslist = NewStringList()
     </start>
   </game>
   <command name="lookat">
@@ -3458,6 +3459,10 @@ Try entering: gamename Pixie Kicks Ass
           <value>Look at</value>
           <value>Drop</value>
         </inventoryverbs>
+		<displayverbs type="stringlist">
+          <value>Look at</value>
+          <value>Take</value>
+        </displayverbs>
         <nocopy type="string"></nocopy>
         <taken type="boolean">false</taken>
         <dropmsg>You watch as the disk hovers in mid air for a moment, then plummets to the ground with a soft thud.</dropmsg>
@@ -6693,7 +6698,7 @@ Try entering: gamename Pixie Kicks Ass
       if (EndsWith(text, "aslx")) {
         error ("You can't view .aslx files, Pixie!")
       }
-      msg ("Displaying file content...<br/><iframe  id=\"iframepre\" style=\"background:khaki;color:green;font-family:'Droid Sans Mono';border-radius:25px\" width=\"100%\" height=\"550px\" src=\"" + GetFileURL("" + text + "") + "\" />")
+      msg ("Displaying file content...<br/><iframe  class=\"iframepre\" style=\"background:khaki;color:green;font-family:'Droid Sans Mono';border-radius:25px\" width=\"100%\" height=\"550px\" src=\"" + GetFileURL(text) + "\" /></iframe>")
     ]]></script>
   </command>
   <command name="kv_JSrequest">
