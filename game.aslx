@@ -299,7 +299,7 @@
   <delegate name="AssociatedScope" parameters="" type="objectlist" />
   <game name="Pixie's Quest">
     <gameid>ba3a1705-de77-4b97-b22e-0800c1e2beb5</gameid>
-    <version>1.5.0.9.4</version>
+    <version>1.5.0.9.5</version>
     <firstpublished>2017</firstpublished>
     <author>Dark Lizerd, XanMag, and K.V.</author>
     <aslversion>550</aslversion>
@@ -6698,7 +6698,30 @@ Try entering: gamename Pixie Kicks Ass
       if (EndsWith(text, "aslx")) {
         error ("You can't view .aslx files, Pixie!")
       }
-      msg ("Displaying file content...<br/><iframe  class=\"iframepre\" style=\"background:khaki;color:green;font-family:'Droid Sans Mono';border-radius:25px\" width=\"100%\" height=\"550px\" src=\"" + GetFileURL(text) + "\" /></iframe>")
+	  //The iframe will not load the data in the Quest 5.9 desktop player. This next line worked  in 5.7.2 and 5.8, but now we must cheat. =(
+	  //msg ("Displaying file content...<br/><iframe  class=\"iframepre\" style=\"background:khaki;color:green;font-family:'Droid Sans Mono';border-radius:25px\" width=\"100%\" height=\"550px\" src=\"" + GetFileURL(text) + "\" /></iframe>")
+	  msg ("Displaying file content...<br/>")
+	  switch (LCase(Trim(text))){
+	    case ("readme.txt"){
+		  msg ("<div style=\"background:khaki;color:green;font-family:'Droid Sans Mono';border-radius:25px; padding: 8px;\" width=\"100%\" height=\"550px\" >Pixie,<br/><br/>You should definitely check out the file blue_Telemat-booth.txt, if you haven't already.<br/><br/>There are a few clues that could help you here hidden in local files as well as on the forum.<br/><br/>Have fun!<br/><br/><br/>Oh, yeah... Did I mention that I included all of your CHEAT commands???<br/>(They're in your bag of tricks.)<br/><br/>Best regards,<br/>K.V.<br/></div>")
+		}
+		case ("blue_telemat-booth.txt"){
+		  msg ("<div style=\"background:khaki;color:green;font-family:'Droid Sans Mono';border-radius:25px; padding: 8px;\" width=\"100%\" height=\"550px\" >Pix,<br/><br/>To travel to my dimension:<br/><br/>Enter the Telemat booth and dial the answer to the question on the sticky note.<br/><br/>Best regards,<br/>RH</div>")
+		}
+		case ("js_functions.txt"){
+		  msg ("<div style=\"background:khaki;color:green;font-family:'Droid Sans Mono';border-radius:25px; padding: 8px;\" width=\"100%\" height=\"550px\" >JS functions:<br/><br/>  JS.setGameWidth(width)<br/>  JS.hideBorder()<br/>  JS.showBorder()<br/>  JS.setGamePadding(top, bottom, left, right)<br/>  JS.addExternalStyleheet(stylesheet)<br/>  // I think the stylesheet should be a file name (or perhaps a URL) as the parameter<br/>  JS.SetMenuBackground(colour)<br/>  JS.SetMenuForeground(colour)<br/>  JS.SetMenuHoverBackground(colour)<br/>  JS.SetMenuHoverForeground(colour)<br/>  JS.SetMenuFontName(fontname)<br/>  // these refer to the menu that appears when the player clicks on a hyperlink in the text<br/>  JS.SetMenuFontSize(size)<br/>  // the size must be a string that is a number followed by \"pt\"<br/>  JS.TurnOffHyperlinksUnderline()<br/>  JS.TurnOnHyperlinksUnderline()<br/>  JS.panesVisible(Boolean)<br/>  JS.showStatusVisible(Boolean)<br/>  JS.uiShow(element)<br/>  JS.uiHide(element)<br/>  // Valid element names include \"#gamePanes\", \"#txtCommandDiv\", \"#location\"<br/>  JS.setBackground(colour)<br/>  JS.setInterfaceString (\"InventoryLabel\", \"You are holding\")<br/>  JS.setInterfaceString (\"SetInterfaceString\", \"StatusLabel=How you are doing\")<br/>  JS.setInterfaceString (\"SetInterfaceString\", \"PlacesObjectsLabel=Things you can see\")<br/>  JS.setInterfaceString (\"SetInterfaceString\", \"CompassLabel=Directions you can go\")<br/>  JS.setInterfaceString (\"SetInterfaceString\", \"InButtonLabel=In\")<br/>  JS.setInterfaceString (\"SetInterfaceString\", \"OutButtonLabel=out\")<br/>  JS.setInterfaceString (\"SetInterfaceString\", \"EmptyListLabel=Stuff all\")<br/>  JS.setInterfaceString (\"SetInterfaceString\", \"NothingSelectedLabel=-\")<br/>  JS.setInterfaceString (\"SetInterfaceString\", \"TypeHereLabel=Now what?\")<br/>  JS.setInterfaceString (\"SetInterfaceString\", \"ContinueLabel=Just press a button to get on with it\")  <br/>  <br/>// Other things JS related (I think)<br/>//<br/>request (Hide, \"Panes\")<br/>request (Hide, \"Location\")<br/>request (Hide, \"Command\")<br/>SetBackgroundImage (\"px_avatar.png\")<br/>SetBackgroundOpacity (0.8)<br/>SetBackgroundColour (\"black\")<br/>JS.setCss (\"#gameBorder\", \"box-shadow:0px 0px 15px 5px #fac4ff;\")<br/>SetBackgroundOpacity (1)<br/>SetForegroundColour (\"Black\")<br/>SetBackgroundColour (\"White\")<br/>request (Show, \"Location\")<br/>request (Show, \"Command\")<br/>JS.setCss (\"div#gameBorder\", \"box-shadow:0px 0px 15px 5px black;\")<br/>SetBackgroundImage (\"none\") //I don't know if this is cool or not...<br/>JS.setCss (\"#gamePanes\", \"background:black\")<br/>JS.addText (game.css2)<br/><br/><br/>JS.eval (\"$('#inventoryLabel').insertAfter('#Inventory2Accordion')\")<br/>JS.eval (\"$('#inventoryAccordion').insertAfter('#inventoryLabel')\")<br/>JS.setCss (\"div#gamePanes\", \"background-color:#296231\")<br/>JS.setCss (\".elementListWrapper\", \"background-color:#296231\")<br/>JS.setCss (\".elementListWrapper\", \"color:#fac4ff\")<br/>JS.setCss(\"#gamePanesRunning\", \"pointer-events: none;\")<br/>JS.setCss(\"#txtCommand\", \"outline:none;box-shadow:0px 0px 5px 5px #296231;\")</div>")
+		}
+		case ("dir.txt"){
+		  invoke (kv_dir.script)
+		}
+		case ("ls.txt"){
+		  msg ("<div style=\"background:khaki;color:green;font-family:'Droid Sans Mono';border-radius:25px;padding:8px;\" width=\"100%\" height=\"550px\"><br/>pixie@QUESTPX-B5.7.6404.27031 MSYSqUEST /c/Users/pixie/Documents/Quest-Master/Pixies-Quest/quest://local/<br/><br/>$ ls<br/> 4px.aslx                'Drums237-drums only.mp3'   ls.txt          script.png<br/> blue_Telemat-booth.txt  'Fired Up.mp3'              px_avatar.png<br/> dir.txt                  JS_functions.txt           README.txt<br/><br/></div>")
+		}
+		default {
+		  msg ("<div style=\"background:khaki;color:green;font-family:'Droid Sans Mono';border-radius:25px\" width=\"100%\" height=\"550px\"></div>")
+		}
+	  }
+      
     ]]></script>
   </command>
   <command name="kv_JSrequest">
@@ -6759,8 +6782,7 @@ Try entering: gamename Pixie Kicks Ass
   <command name="kv_ls">
     <pattern>ls</pattern>
     <script><![CDATA[
-      msg ("<iframe style=\"background:ghostwhite;box-shadow:0px 0px 8px black;text-shadow:0px 0px 4px green;font-family:monospace;border-radius:25px\" width=\"100%\" height=\"350px\"  src=\"" + GetFileURL("ls.txt") + "\" />")
-      // msg ("This doesn't work...<br/><br/><br/><style><br/>  .thumb {<br/>    height: 75px;<br/>    border: 1px solid #000;<br/>    margin: 10px 5px 0 0;<br/>  }</style><br/><br/><input type=\"file\" id=\"files\" name=\"files[]\" multiple /><br/><output id=\"list\"></output><br/><br/><script><br/><br/><br/>  function handleFileSelect(evt) {  var files = evt.target.files;    for (var i = 0, f; f = files[i]; i++) {   continue;   var reader = new FileReader();      reader.onload = (function(theFile) {       return function(e) { var span = document.createElement('span');     span.innerHTML = '"+GetFileData(theFile.name)+"';         document.getElementById('list').insertBefore(span, null);      };     })(f);     reader.readAsDataURL(f);    }  }  document.getElementById('files').addEventListener('change', handleFileSelect, false);</script>")
+      msg ("<div style=\"background:ghostwhite;box-shadow:0px 0px 8px black;text-shadow:0px 0px 4px green;font-family:monospace;border-radius:25px;padding:6px;\" width=\"100%\" height=\"350px\"><br/>pixie@QUESTPX-B5.7.6404.27031 MSYSqUEST /c/Users/pixie/Documents/Quest-Master/Pixies-Quest/quest://local/<br/><br/>$ ls<br/> 4px.aslx                'Drums237-drums only.mp3'   ls.txt          script.png<br/> blue_Telemat-booth.txt  'Fired Up.mp3'              px_avatar.png<br/> dir.txt                  JS_functions.txt           README.txt<br/><br/></div>")
     ]]></script>
   </command>
   <command name="kv_scopecommands">
@@ -6799,7 +6821,7 @@ Try entering: gamename Pixie Kicks Ass
   <command name="kv_dir">
     <pattern>dir</pattern>
     <script><![CDATA[
-      msg ("<iframe style=\"background:darkkhaki;font-family:monospace;border-radius:25px\" width=\"100%\" height=\"550px\"  src=\"" + GetFileURL("dir.txt") + "\" />")
+      msg ("<div style=\"background:darkkhaki;font-family:monospace;border-radius:25px;padding:8px;\" width=\"100%\" height=\"550px\">Q:\\Users\\pixie\\Documents\\Quest-Master\\Pixies-Quest\\quest://local/<br/> Volume in drive Q is Quest<br/> Volume Serial Number is 69105-42-FRITTATA-11<br/><br/> Directory of Q:\\Users\\pixie\\Documents\\Quest-Master\\Pixies-Quest\\quest://local/<br/><br/>09/17/2017  09:03 PM    <DIR>          .<br/>09/17/2017  09:03 PM    <DIR>          ..<br/>09/17/2017  08:48 PM         2,655,642 4px.aslx<br/>08/25/2017  03:10 AM               138 blue_Telemat-booth.txt<br/>09/02/2017  02:58 PM             1,037 dir.txt<br/>08/23/2017  01:45 PM         1,374,158 Drums237-drums only.mp3<br/>08/19/2017  12:59 PM         6,455,265 Fired Up.mp3<br/>09/06/2017  11:39 AM             2,769 JS_functions.txt<br/>09/17/2017  09:08 PM               331 ls.txt<br/>08/17/2017  11:33 AM               541 px_avatar.png<br/>09/17/2017  09:03 PM               344 README.txt<br/>08/13/2017  01:34 AM            84,525 script.png<br/>              10 File(s)     10,574,750 bytes<br/>               2 Dir(s)  286,386,765,824 bytes free<br/></div>")
     ]]></script>
   </command>
   <command name="kv_glitchTest">
