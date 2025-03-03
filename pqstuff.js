@@ -1,4 +1,4 @@
-﻿let pqJsVersion = "1.0.1";
+﻿const pqJsVersion = "1.0.1";
 
 var _animateScroll = false;
 
