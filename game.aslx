@@ -299,7 +299,7 @@
   <delegate name="AssociatedScope" parameters="" type="objectlist" />
   <game name="Pixie's Quest">
     <gameid>ba3a1705-de77-4b97-b22e-0800c1e2beb5</gameid>
-    <version>1.5.0.9.5</version>
+    <version>1.5.1.2</version>
     <firstpublished>2017</firstpublished>
     <author>Dark Lizerd, XanMag, and K.V.</author>
     <aslversion>550</aslversion>
@@ -351,7 +351,7 @@
     <colourblend type="boolean">false</colourblend>
     <colourblendtop>#296231</colourblendtop>
     <colourblendbottom>#fac4ff</colourblendbottom>
-    <turnoffsavebutton />
+    <turnoffsavebutton type="boolean">false</turnoffsavebutton>
     <shadowbox type="boolean">false</shadowbox>
     <menubackground>#296231</menubackground>
     <menuforeground>#fac4ff</menuforeground>
@@ -404,7 +404,7 @@
       FinishGame ("You have died!")
     </onhealthzero>
     <inituserinterface type="script"><![CDATA[
-      JS.eval ("$('body').append('<style>@media only screen and (max-width: 956px) {#gamePanes, .game-stats {display: none !important;}}</style>');")
+      JS.eval ("$('body').append('<style>@media only screen and (max-width: 956px) {.game-stats {display: none !important;}}</style>');")
 
       JS.eval ("$(\"#txtCommand\").css(\"font-size\", \"16px\")")
       SetTimeout(2){
@@ -13506,27 +13506,29 @@ Try entering: gamename Pixie Kicks Ass
     }
   ]]></function>
   <function name="SetupSidenav"><![CDATA[
-    // Setup navCmdClick() function to handle sideNav command link clicks
-    JS.eval ("function navCmdClick(cmd){if (_waitMode || isElementVisible('#gamePanesFinished')){return;}ASLEvent('HandleNavCmdClick', cmd);}")
-    // Add the CSS
-    JS.addScript ("<style> .sidenav  {  height: 100%;    width: 0;    position: fixed;  transition: 0.5s;  z-index: 999;    top: 0;    right: 0;    background-color:#296231;    overflow-x: hidden;    padding-top: 60px;   } .sidenav a {   padding: 8px 8px 8px 32px;    text-decoration: none;  transition: 0.5s;  font-size: 25px;    color: #fac4ff;    display: block;   } .sidenav a:hover {   color: #f1f1f1;  } .sidenav .closebtn {   position: absolute;    top: 0;    right: 25px;    font-size: 36px;    margin-left: 50px; }#sidenav-open{top:25px;}</style>")
-    // Add the sidenav element
-    mySidenav = ""
-    // Move it to the body element
-    JS.eval ("$('#mySidenav').remove(); $('body').append(\"<div id='mySidenav' class='sidenav'><br/>    <a href='' class='closebtn' onclick='closeNav();'>&times;</a> <center><span id='map-holder' /></center></div><span id='sidenav-open' style='font-size:30px;cursor:pointer;top:0;right:0;color:white;background:#296231;border:2px solid #fac4ff;position:fixed;z-index:998;opacity:0.7;' onclick='openNav()'>&#9776;</span>\");")
-    // Move the button, too.
-    JS.eval ("$('body').append($('#sidenav-open'));")
-    // Set up the openNav() and closeNav() functions
-    JS.eval ("function openNav() { $('#mySidenav').width(($(window).width() - $('#gameBorder').width()) / 2);}; function closeNav() {  $('#mySidenav').width('0');};if(isMobilePlayer()){closeNav();}")
-    AddSidenavCmdLink ("Look")
-    AddSidenavCmdLink ("Get all")
-    AddSidenavCmdLink ("Undo")
-    AddSidenavCmdLink ("Wait")
-    AddSidenavCmdLink ("Save")
-    AddSidenavCmdLink ("Clear")
-    AddSidenavCmdLink ("Panes")
-    AddSidenavCmdLink ("HINTS")
-    AddSidenavContactLink
+    if (not StartsWith (GetFileURL("foo"), "/game"){
+      // Setup navCmdClick() function to handle sideNav command link clicks
+      JS.eval ("function navCmdClick(cmd){if (_waitMode || isElementVisible('#gamePanesFinished')){return;}; canSendCommand=true; ASLEvent('HandleNavCmdClick', cmd); canSendCommand=true;}")
+      // Add the CSS
+      JS.addScript ("<style> .sidenav  {  height: 100%;    width: 0;    position: fixed;  transition: 0.5s;  z-index: 999;    top: 0;    left: 0;    background-color:#296231;    overflow-x: hidden;    padding-top: 60px;   } .sidenav a {   padding: 8px 8px 8px 32px;    text-decoration: none;  transition: 0.5s;  font-size: 25px;    color: #fac4ff;    display: block;   } .sidenav a:hover {   color: #f1f1f1;  } .sidenav .closebtn {   position: absolute;    top: 0;    right: 25px;    font-size: 36px;    margin-left: 50px; }#sidenav-open{top:25px;}</style>")
+      // Add the sidenav element
+      mySidenav = ""
+      // Move it to the body element
+      JS.eval ("$('#mySidenav').remove(); $('body').append(\"<div id='mySidenav' class='sidenav'><br/>    <a href='' class='closebtn' onclick='closeNav();'>&times;</a> <center><span id='map-holder' /></center></div><span id='sidenav-open' style='font-size:30px;cursor:pointer;top:0;right:0;color:white;background:#296231;border:2px solid #fac4ff;position:fixed;z-index:998;opacity:0.7;' onclick='openNav()'>&#9776;</span>\");")
+      // Move the button, too.
+      JS.eval ("$('body').append($('#sidenav-open'));")
+      // Set up the openNav() and closeNav() functions
+      JS.eval ("function openNav() { $('#mySidenav').width(($(window).width() - ($('#gameBorder').width() || $(window).width()/2) / 2);}; function closeNav() {  $('#mySidenav').width('0');};if(isMobilePlayer()){closeNav();}")
+      AddSidenavCmdLink ("Look")
+      AddSidenavCmdLink ("Get all")
+      AddSidenavCmdLink ("Undo")
+      AddSidenavCmdLink ("Wait")
+      AddSidenavCmdLink ("Save")
+      AddSidenavCmdLink ("Clear")
+      AddSidenavCmdLink ("Panes")
+      AddSidenavCmdLink ("HINTS")
+      AddSidenavContactLink
+    }
   ]]></function>
   <function name="AddSidenavCmdLink" parameters="cmd"><![CDATA[
     // Add a link with "cmd" as the text, which will handle the command on click
