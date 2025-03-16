@@ -343,7 +343,7 @@
     </cmdprompts>
     <publishfileextensions>*.jpg;*.jpeg;*.png;*.gif;*.js;*.wav;*.mp3;*.htm;*.html;*.svg;*.md;*.txt</publishfileextensions>
     <showpanes />
-    <tower><![CDATA[<img  style="border:none;" src="{=GetFileURL("qdk-background.jpg")}" alt="QuestTower" width="32%" height="32%"/>]]></tower>
+    <tower><![CDATA[<img  style="border:none;" src="{=GetFileURL("qdk-background.jpg")}" alt="" width="32%" height="32%"/>]]></tower>
     <underlinehyperlinks />
     <locationmsg>" + CapFirst(GetDisplayName(game.pov.parent)) + "</locationmsg>
     <subtitle>SHARDS OF ∞: PART NIL</subtitle>
@@ -404,9 +404,9 @@
       FinishGame ("You have died!")
     </onhealthzero>
     <inituserinterface type="script"><![CDATA[
-      JS.eval ("$('body').append('<style>@media only screen and (max-width: 956px) {.game-stats {display: none !important;}}</style>');")
-
-      JS.eval ("$(\"#txtCommand\").css(\"font-size\", \"16px\")")
+      //JS.eval ("$('head').append('<style>@media only screen and (max-width: 956px) {#gamePanes, .game-stats {display: none;} #gameContent {max-width:950px}</style>');")
+      JS.eval ("$('head').append('<style>@media screen and (max-width: 768px) {#gamePanes{display:block;} #gameContent {max-width:700px}body{font-size:28px; line-height:24px;}}</style>');")
+      JS.eval ("$(\"#txtCommandDiv > input\").css(\"font-size\", \"16px\")")
       SetTimeout(2){
         if (GetBoolean (game, "glitching")){
           do (kv_glitch, "glitching")
@@ -1326,6 +1326,7 @@
       <usedefaultprefix type="boolean">false</usedefaultprefix>
       <description type="script"><![CDATA[
         JS.uiHide ("#gamePanes")
+        JS.eval ("if($('#sidebar').width() != null){$('#gameContent').css({'max-width':'950px'});}")
         JS.eval ("var scrollToEndBak1 = scrollToEnd;scrollToEnd = function(){};")
         if (game.pov = player1) {
           game.menuoutputsection = StartNewOutputSection()
@@ -1549,6 +1550,7 @@
             }
             case ("QUIT the game") {
               JS.setCss ("#gamePanes", "display:block;background:transparent")
+              JS.eval ("if($('#sidebar').width() != null){$('#gameContent').css({'max-width':'700px'});}")
               finish
             }
             case ("Read your TRANSCRIPT") {
@@ -1576,6 +1578,7 @@
   <object name="startingup">
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <objectslistprefix type="string"></objectslistprefix>
+    <alias> </alias>
     <description type="script">
     </description>
     <enter type="script"><![CDATA[
@@ -1586,8 +1589,8 @@
       JS.setCss ("#gameBorder", "box-shadow:0px 0px 15px 5px #fac4ff;")
       JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 2px 2px #296231;")
       SetBackgroundOpacity(0.8)
-      PrintCentered ("<div onclick=\"sendEndWait()\"><br/><img width=\"10%\" src=\"" + GetFileURL("px_avatar.png") + "\"  onload=\"$(this).fadeIn(10000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" /><br/><br/><br/><img src=\"" + GetFileURL("titlesplash.png")  + "\"  onload=\"$(this).fadeIn(1500);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" /></div><br/><br/><img onclick=\"ASLEvent('HandleNavCmdClick', 'l');\" src=\"" + GetFileURL("Initialising.png")  + "\"  onload=\"$(this).fadeOut(5500);\" /><br/></center><br/>")
-      PrintCentered ("<span onclick=\"sendEndWait()\">  <img src=\"" + GetFileURL("anykeytocontinue.png") + "\" id=\"titleimage\" onload=\"$(this).fadeIn(10000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" /></span>")
+      PrintCentered ("<div onclick=\"sendEndWait()\"><br/><img width=\"10%\" alt=\"\" src=\"" + GetFileURL("px_avatar.png") + "\"  onload=\"$(this).fadeIn(10000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" /><br/><br/><br/><img src=\"" + GetFileURL("titlesplash.png")  + "\"  onload=\"$(this).fadeIn(1500);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\" alt=\"\"/></div><br/><br/><img onclick=\"ASLEvent('HandleNavCmdClick', 'l');\" src=\"" + GetFileURL("Initialising.png")  + "\"  onload=\"$(this).fadeOut(5500);\" alt=\"\" /><br/></center><br/>")
+      PrintCentered ("<span onclick=\"sendEndWait()\">  <img src=\"" + GetFileURL("anykeytocontinue.png") + "\" id=\"titleimage\" onload=\"$(this).fadeIn(10000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #fac4ff;\"  alt=\"\"/></span>")
       wait {
         MoveObject (player, startingup2)
       }
@@ -1620,6 +1623,7 @@
     <object name="startingup2">
       <objectslistprefix type="string"></objectslistprefix>
       <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <alias> </alias>
       <description type="script"><![CDATA[
         SetBackgroundOpacity (0.8)
         SetForegroundColour ("Black")
@@ -1628,7 +1632,7 @@
         JS.eval ("$('#status').css('max-height','0');")
         ClearScreen
         JS.uiHide ("#txtCommand")
-        PrintCentered ("{command:look:<br/><img src=\"" + GetFileURL("px_avatar.png")  + "\" id=\"titleimage\" onload=\"$(this).fadeIn(300);\" style=\"box-shadow:0px 0px 15px 5px #fac4ff;display:none\" /><br/><br/>}")
+        PrintCentered ("{command:look:<br/><img src=\"" + GetFileURL("px_avatar.png")  + "\" id=\"titleimage\" onload=\"$(this).fadeIn(300);\" style=\"box-shadow:0px 0px 15px 5px #fac4ff;display:none\"  alt=\"\"/><br/><br/>}")
         PrintCentered ("<span style=\"font-size:260%\">{game.gamename}</span><br/><span style=\"font-size:145%\">by {game.author}</span><br/>")
         msg ("<span onclick=\"sendEndWait()\"><center>This game is for The Pixie. Thanks for everything you do!</center><br><hr/><br></span>")
         msg ("")
@@ -1645,6 +1649,7 @@
           MoveObject (player, Quest Forum)
           UpdateContentsInLists
           JS.uiShow ("#gamePanes")
+          JS.eval ("if($('#sidebar').width() != null){$('#gameContent').css({'max-width':'700px'});}")
         }
       ]]></description>
     </object>
@@ -1715,7 +1720,7 @@
         </hintlist>
         <use type="script"><![CDATA[
           game.menuoutputsection = StartNewOutputSection()
-          PrintCentered ("<div style=\"background:inherit;padding:12px\" ><br/><img width=\"10%\" <img src=\"" + GetFileURL("quest_square.png")  + "\"  title=\"QUEST PX\" id=\"titleimage\" onload=\"$(this).fadeIn(2000);\" style=\"display:none;\" /><br/><br/><img src=\"" + GetFileURL("viewalerts.png")  + "\"  title=\"Click here to view your alerts!\" id=\"titleimage\" onload=\"$(this).fadeIn(3000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #269261;\"  onclick=\"ASLEvent('HandleButtonClick','view alerts')\" /><br/><br/><img <img src=\"" + GetFileURL("viewbookmarks.png")  + "\"  title=\"Click here to view your bookmarks!\" id=\"titleimage\" onload=\"$(this).fadeIn(4000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #269261;\"  onclick=\"ASLEvent('HandleButtonClick','view bookmarks')\" /><br/><br/><img src=\"" + GetFileURL("viewdocs.png")  + "\" title=\"Click here to view the online Quest documentation!\"  id=\"titleimage\" onload=\"$(this).fadeIn(5000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #269261;\"  onclick=\"ASLEvent('HandleButtonClick','view the Quest documentation')\" /><br/>{if player.loadedrh:<br/><img <img src=\"" + GetFileURL("consulthints.png")  + "\" title=\"Clicking this is a waste of time!\"  id=\"titleimage\" onload=\"$(this).fadeIn(5500);\" style=\"display:none;box-shadow:0px 0px 15px 5px #269261;\"  onclick=\"ASLEvent('HandleButtonClick','hints')\" /><br/><br/><img <img src=\"" + GetFileURL("viewcommands.png")  + "\" title=\"View the command list (for copying and pasting purposes)!\"  id=\"titleimage\" onload=\"$(this).fadeIn(6000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #269261;\"  onclick=\"ASLEvent('HandleButtonClick','scopecommands')\" /><br/>}</div>")
+          PrintCentered ("<div style=\"background:inherit;padding:12px\" ><br/><img width=\"10%\" src=\"" + GetFileURL("quest_square.png")  + "\"  title=\"QUEST PX\" id=\"titleimage\" onload=\"$(this).fadeIn(2000);\" style=\"display:none;\"  alt=\"\"/><br/><br/><img src=\"" + GetFileURL("viewalerts.png")  + "\"  title=\"Click here to view your alerts!\" id=\"titleimage\" onload=\"$(this).fadeIn(3000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #269261;\"  onclick=\"ASLEvent('HandleButtonClick','view alerts')\"  alt=\"CLICK HERE TO VIEW YOUR ALERTS\"/><br/><br/><img src=\"" + GetFileURL("viewbookmarks.png")  + "\"  title=\"Click here to view your bookmarks!\" id=\"titleimage\" onload=\"$(this).fadeIn(4000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #269261;\"  onclick=\"ASLEvent('HandleButtonClick','view bookmarks')\"  alt=\"CLICK HERE TO VIEW YOUR BOOKMARKS\"/><br/><br/><img src=\"" + GetFileURL("viewdocs.png")  + "\" title=\"Click here to view the online Quest documentation!\"  id=\"titleimage\" onload=\"$(this).fadeIn(5000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #269261;\"  onclick=\"ASLEvent('HandleButtonClick','view the Quest documentation')\"  alt=\"\"CLICK HERE TO VIEW ONLINE QUEST DOCS/><br/>{if player.loadedrh:<br/><img src=\"" + GetFileURL("consulthints.png")  + "\" title=\"Clicking this is a waste of time!\"  id=\"titleimage\" onload=\"$(this).fadeIn(5500);\" style=\"display:none;box-shadow:0px 0px 15px 5px #269261;\"  onclick=\"ASLEvent('HandleButtonClick','hints')\"  alt=\"CLICK HERE TO CONSULT HINTS\"/><br/><br/><img src=\"" + GetFileURL("viewcommands.png")  + "\" title=\"View the command list (for copying and pasting purposes)!\"  id=\"titleimage\" onload=\"$(this).fadeIn(6000);\" style=\"display:none;box-shadow:0px 0px 15px 5px #269261;\"  onclick=\"ASLEvent('HandleButtonClick','scopecommands')\"  alt=\"CLICK HERE TO VIEW COMMANDS\"/><br/>}</div>")
           EndOutputSection (game.menuoutputsection)
           msg ("")
           SetTimeout(1){
@@ -1768,7 +1773,7 @@
           <visible />
           <scenery type="boolean">false</scenery>
           <fav type="script"><![CDATA[
-            msg ("<img src='"+GetFileURL("jspost.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/g60vk5rov0k4uc2sek2nvg/javascript-in-a-command\">View this post in your browser.</a>")
+            msg ("<img src='"+GetFileURL("jspost.png") + "' width=\"100%\" height=\"344\" alt=\"\"/><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/g60vk5rov0k4uc2sek2nvg/javascript-in-a-command\">View this post in your browser.</a>")
             JS.scrollToEnd ()
           ]]></fav>
           <look type="script"><![CDATA[
@@ -1783,7 +1788,7 @@
                 msg ("This post has been automatically added to your Bookmarks. <br>(USE YOUR QUEST DEVICE TO VIEW YOUR BOOKMARKS.)")
               }
             }
-            msg ("<img src='"+GetFileURL("jspost.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/g60vk5rov0k4uc2sek2nvg/javascript-in-a-command\">View this post in your browser.</a>")
+            msg ("<img src='"+GetFileURL("jspost.png") + "' width=\"100%\" height=\"344\" alt=\"\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/g60vk5rov0k4uc2sek2nvg/javascript-in-a-command\">View this post in your browser.</a>")
             RemoveObject (kv_js_post)
             if (HasAttribute(kv_device,"alertsnow")) {
               list remove (kv_device.alertsnow, kv_js_post)
@@ -1942,7 +1947,7 @@
         }
         MoveObject (kv_complete_alert, kv_device)
         msg ("{b:YOU HAVE A NEW ALERT!}<br/><br/>\"Pixie!\" KV walks up and hands you a token.<br/><br/>\"That's just a small token of my appreciation, sir! <br/><br/>\"I don't know why I made you go through all that just to get it... <br/>\"(I think it may have been XanMag's fault...)\"<br/>")
-        msg ("<img width=\"19%\" src=\"" + GetFileURL("kv_token.png")  + "\" />")
+        msg ("<img width=\"19%\" src=\"" + GetFileURL("kv_token.png")  + "\"  alt=\"IMAGE OF YOUR TOKEN OF APPRECIATION\"/>")
         QuestComplete (KV, "token")
         IncreaseScore (10)
         msg ("<center><b>[  YOUR SCORE HAS INCREASED BY 10  ]</b></center>")
@@ -2498,7 +2503,7 @@
       <visible type="boolean">false</visible>
       <look>You look closely at the pill.  It's light brown and has the letters AD etched in its surface.</look>
       <alias>brown pill</alias>
-      <takemsg>{if BeginsWith(LCase(player.currentcommand), "take")):By take I assume you mean pick up?  }Okay.  Taken.</takemsg>
+      <takemsg>{if BeginsWith(LCase(player.currentcommand), "take"):By take I assume you mean pick up?  }Okay.  Taken.</takemsg>
       <alt type="stringlist">
         <value>adderall</value>
       </alt>
@@ -2829,7 +2834,7 @@
       <takemsg>You can't take it. Try examining it.</takemsg>
       <read>Just examine it please.</read>
       <look type="script"><![CDATA[
-        msg ("<img src='"+GetFileURL("generalpost.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"https://textadventures.co.uk/forum/general/topic/zi3qvd_s0kup9dabfes6rw/for-all-you-imbibers-out-there\">View this post in your browser.</a>")
+        msg ("<img src='"+GetFileURL("generalpost.png") + "' width=\"100%\" height=\"344\" alt=\"\"/><br/><a href=\"https://textadventures.co.uk/forum/general/topic/zi3qvd_s0kup9dabfes6rw/for-all-you-imbibers-out-there\">View this post in your browser.</a>")
         firsttime {
           GeneralDiscussionPostXM.viewedXM = true
           IncreaseScore (5)
@@ -2907,7 +2912,7 @@
           if (not KVs room.visited) {
             msg ("The PC whirrs to life...<br/>")
             if (not HasAttribute(rh_PC, "switchedononce")) {
-              msg ("A new shade of black appears on the screen, then a message slowly appears...<br/><hr><br/><center style=\"background:black;border-radius:25px\"><br><br><img width=\"59%\" src=\"" + GetFileURL("gameon.png")  + "\"  id=\"titleimage\" onload=\"$(this).fadeIn(10000);\" style=\"display:none\" /><br/><br/><br></center><br/><br/><center><b>[  YOUR SCORE HAS INCREASED BY 1  ]</b></center>")
+              msg ("A new shade of black appears on the screen, then a message slowly appears...<br/><hr><br/><center style=\"background:black;border-radius:25px\"><br><br><img width=\"59%\" src=\"" + GetFileURL("gameon.png")  + "\"  id=\"titleimage\" onload=\"$(this).fadeIn(10000);\" style=\"display:none\"  alt=\"gameon.png failed to load!\"/><br/><br/><br></center><br/><br/><center><b>[  YOUR SCORE HAS INCREASED BY 1  ]</b></center>")
               rh_PC.switchedononce = true
               MakeObjectVisible (rh_screen)
               rh_ANY key.scenery = false
@@ -3213,7 +3218,7 @@ Try entering: gamename Pixie Kicks Ass
             }
           }
         }
-        msg ("<img src='" + GetFileURL("post23346.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/3524/why-is-quest-unpopular#23240\">View this post in your browser.</a>")
+        msg ("<img src='" + GetFileURL("post23346.png") + "' width=\"100%\" height=\"344\"  alt=\"\"/><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/3524/why-is-quest-unpopular#23240\">View this post in your browser.</a>")
         if (player.loadedrh) {
           if (not ListContains(kv_device.favorites, post 23346)) {
             list add (kv_device.favorites, post 23346)
@@ -3223,7 +3228,7 @@ Try entering: gamename Pixie Kicks Ass
         MakeObjectInvisible (post 23346)
       ]]></look>
       <fav type="script"><![CDATA[
-        msg ("<img src='" + GetFileURL("post23346.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/3524/why-is-quest-unpopular#23240\">View this post in your browser.</a>")
+        msg ("<img src='" + GetFileURL("post23346.png") + "' width=\"100%\" height=\"344\" alt=\"\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/3524/why-is-quest-unpopular#23240\">View this post in your browser.</a>")
       ]]></fav>
     </object>
     <turnscript name="rh_ingame">
@@ -4432,7 +4437,7 @@ Try entering: gamename Pixie Kicks Ass
       game.suppressturnscripts = true
       hidemsg = "Panes disabled."
       showmsg = "Panes enabled."
-      JS.eval ("if (isElementVisible('#gamePanes')){ uiHide('#gamePanes'); addTextAndScroll('"+ hidemsg + "') }else{uiShow('#gamePanes'); addTextAndScroll('"+ showmsg + "');}")
+      JS.eval ("function isViva(){return ($('#sidebar').width() != null);}; if (isElementVisible('#gamePanes')){ uiHide('#gamePanes'); if (isViva()){$('#gameContent').css({'max-width':'950px'});} addTextAndScroll('"+ hidemsg + "') }else{uiShow('#gamePanes'); if(isViva()){$('#gameContent').css({'max-width':'700px'});} addTextAndScroll('"+ showmsg + "');}")
     </script>
   </command>
   <turnscript name="checkQuests_kv">
@@ -4595,7 +4600,7 @@ Try entering: gamename Pixie Kicks Ass
           if (game.pov.parent.dark) {
             if (game.pov.parent=kv_Darkness) {
               msg ("A soft glow emanates from the lamp, then slowly grows brighter, revealing your surroundings.  As you glance to and fro in an attempt to acclimate, the lamp begins to hum.<br/><br/>The humming is driving you insane! Growing louder and louder by the second, until, finally...")
-              msg ("<img src=\"" + GetFileURL("internalError.png")  + "\" />")
+              msg ("<img src=\"" + GetFileURL("internalError.png")  + "\" alt=\"\" />")
               msg ("<br/><br/>Your surroundings, however, remain <code style=\"color:red\">not game.pov.parent.dark</code><br/><br/>'Huh,' you think to yourself (as if you'd think anything to anyone else), 'I hope I wasn't going to need <i>that</i> for anything else!'<br/><br/>")
               MoveObject (player, kv_Swedenborgian Space)
               RemoveObject (kv_lamp)
@@ -5228,7 +5233,7 @@ Try entering: gamename Pixie Kicks Ass
           </hintlist>
           <alias>token of appreciation</alias>
           <look type="script"><![CDATA[
-            msg ("<img src=\"" + GetFileURL("kv_token.png")  + "\" />")
+            msg ("<img src=\"" + GetFileURL("kv_token.png")  + "\"  alt=\"IMAGE OF YOUR TOKEN FROM KV\"/>")
           ]]></look>
           <ondrop type="script">
             msg ("You start to throw the token away, but you decide it may come in handy later.")
@@ -5621,7 +5626,7 @@ Try entering: gamename Pixie Kicks Ass
       </inventoryverbs>
       <scenery />
       <look type="script"><![CDATA[
-        msg ("<img src='" + GetFileURL("timepost.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/u_n5otugokquhpmnu0bdzw/how-do-i-get-time-to-work#d57928f9-27c4-4a93-9083-5892fc1d9cd8\">View this post in your browser.</a>")
+        msg ("<img src='" + GetFileURL("timepost.png") + "' width=\"100%\" height=\"344\" alt=\"\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/u_n5otugokquhpmnu0bdzw/how-do-i-get-time-to-work#d57928f9-27c4-4a93-9083-5892fc1d9cd8\">View this post in your browser.</a>")
         RemoveObject (kv_post_time)
         // UpdateInv2
         list add (kv_device.favorites, kv_post_time)
@@ -5630,7 +5635,7 @@ Try entering: gamename Pixie Kicks Ass
         JS.updateLocation (game.locationmsg)
       ]]></look>
       <fav type="script"><![CDATA[
-        msg ("<img src='" + GetFileURL("timepost.png") + "' width=\"100%\" height=\"344\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/u_n5otugokquhpmnu0bdzw/how-do-i-get-time-to-work#d57928f9-27c4-4a93-9083-5892fc1d9cd8\">View this post in your browser.</a>")
+        msg ("<img src='" + GetFileURL("timepost.png") + "' width=\"100%\" height=\"344\" alt=\"\" /><br/><a href=\"https://textadventures.co.uk/forum/quest/topic/u_n5otugokquhpmnu0bdzw/how-do-i-get-time-to-work#d57928f9-27c4-4a93-9083-5892fc1d9cd8\">View this post in your browser.</a>")
       ]]></fav>
     </object>
 
@@ -6698,7 +6703,7 @@ Try entering: gamename Pixie Kicks Ass
       if (EndsWith(text, "aslx")) {
         error ("You can't view .aslx files, Pixie!")
       }
-	  //The iframe will not load the data in the Quest 5.9 desktop player. This next line worked  in 5.7.2 and 5.8, but now we must cheat. =(
+	  //The iframe will not load the data in the Quest 5.9 desktop player. This next line worked  in 5.7.2 and 5.8, but now we must cheat.
 	  //msg ("Displaying file content...<br/><iframe  class=\"iframepre\" style=\"background:khaki;color:green;font-family:'Droid Sans Mono';border-radius:25px\" width=\"100%\" height=\"550px\" src=\"" + GetFileURL(text) + "\" /></iframe>")
 	  msg ("Displaying file content...<br/>")
 	  switch (LCase(Trim(text))){
@@ -11467,7 +11472,7 @@ Try entering: gamename Pixie Kicks Ass
   ]]></function>
   <function name="ProcessTextCommand_Img" parameters="section, data" type="string"><![CDATA[
     filename = Mid(section, 5)
-    return ("<img src=\"" + GetFileURL(filename) + "\" />")
+    return ("<img src=\"" + GetFileURL(filename) + "\"  alt=\"\"/>")
   ]]></function>
   <function name="ProcessTextCommand_Counter" parameters="section, data" type="string">
     if (HasAttribute(game, section)) {
@@ -11513,7 +11518,7 @@ Try entering: gamename Pixie Kicks Ass
     }
   ]]></function>
   <function name="SetFramePicture" parameters="filename"><![CDATA[
-    request (SetPanelContents, "<img src=\"" + GetFileURL(filename) + "\" onload=\"setPanelHeight()\"/>")
+    request (SetPanelContents, "<img src=\"" + GetFileURL(filename) + "\" onload=\"setPanelHeight()\" alt=\"\"/>")
     game.panelcontents = filename
   ]]></function>
   <function name="ClearFramePicture">
@@ -12739,7 +12744,7 @@ Try entering: gamename Pixie Kicks Ass
     }
     if (game.borderlesscursor) {
       JS.addScript ("<style>#txtCommand { outline:none; border:none; margin:0; padding:0; width:100px; background-color:transparent;}</style>")
-      JS.setCss ("#txtCommandDiv", "color:" + game.defaultforeground)
+      JS.setCss ("#txtCommandDiv > input", "color:" + game.defaultforeground)
       JS.eval ("$('#txtCommandPrompt').html('" + game.commandcursor + "')")
       request (SetInterfaceString, "TypeHereLabel=")
     }
@@ -12959,7 +12964,7 @@ Try entering: gamename Pixie Kicks Ass
     ClearScreen
     JS.uiHide ("#txtCommand")
     JS.setBackground ("black")
-    msg ("<center><image width=\"80%\" src=\"" + GetFileURL("qdk-background.jpg") + "\" onload=\"$(this).fadeOut(4300);\" /></center>")
+    msg ("<center><image width=\"80%\" src=\"" + GetFileURL("qdk-background.jpg") + "\" onload=\"$(this).fadeOut(4300);\" alt=\"\"/></center>")
     JS.uiHide ("#gamePanes")
     SetBackgroundImage ("px_avatar.png")
     SetBackgroundOpacity (0.8)
@@ -13295,14 +13300,15 @@ Try entering: gamename Pixie Kicks Ass
     JS.uiHide ("#gamePanes")
     JS.uiHide ("#location")
     JS.setCss ("#status", "background:none;border:none")
-    JS.eval ("$('#status').css('max-height','0');")
+    JS.eval ("$('#status').css('max-height','0'); if($('#sidebar').width() != null){$('#gameContent').css({'max-width':'950px'});}")
     JS.setInterfaceString ("TypeHereLabel", "Please enter YES or NO.")
     msg ("<center style=\"text-shadow:0px 0px 2px black;padding:60px;margin:60px;text-align:justify;color:white;\"><h2>WARNING:</h2><h3>This game contains explicit language, adult situations, scary monsters, puzzles, middle-aged people, one hot lady, computer programming, more explicit language, and lots of other things that are inappropriate for people under the age of 18.</h3></center><center style=\"color:white\"><h3>Do you agree that you are 18 years of age or older and that nothing at all offends you?<br/><br/>(Enter <a id=\"verblinkyes\" style=\"font-family:'Source Sans Pro', Georgia, serif;color:White;font-size:12pt;\" class=\"cmdlink commandlink\" data-elementid=\"\" data-command=\"YES\">YES</a> or <a id=\"verblinkno\" style=\"font-family:'Source Sans Pro', Georgia, serif;color:White;font-size:12pt;\" class=\"cmdlink commandlink\" data-elementid=\"\" data-command=\"NO\">NO</a>)</h3><h4>(Remember: Santa Claus is watching you!)</h4></center>")
-    JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 5px 5px red;")
+    JS.setCss ("#txtCommandDiv > input", "outline:none;box-shadow:0px 0px 5px 5px red;")
     get input {
       switch (LCase(result)) {
         case ("yes", "y") {
           JS.uiShow ("#gamePanes")
+          JS.eval ("if($('#sidebar').width() != null){$('#gameContent').css({'max-width':'700px'});}")
           JS.uiShow ("#location")
           JS.setBackground ("white")
           JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 2px 2px gold;")
@@ -13316,6 +13322,7 @@ Try entering: gamename Pixie Kicks Ass
           JS.setCss ("body", "background:black")
           // JS.uiShow ("#commandPane")
           JS.uiShow ("#gamePanes")
+          JS.eval ("if($('#sidebar').width() != null){$('#gameContent').css({'max-width':'700px'});}")
           create ("notOldEnough")
           notOldEnough.alias = ""
           notOldEnough.usedefaultprefix = false
@@ -13330,9 +13337,10 @@ Try entering: gamename Pixie Kicks Ass
           kv_showme.parent = null
           kv_showme_it.parent = null
           JS.uiShow ("#gamePanes")
+          JS.eval ("if($('#sidebar').width() != null){$('#gameContent').css({'max-width':'700px'});}")
           JS.uiShow ("#location")
           JS.setBackground ("white")
-          JS.setCss ("#txtCommand", "outline:none;box-shadow:0px 0px 2px 2px gold;")
+          JS.setCss ("#txtCommandDiv > input", "outline:none;box-shadow:0px 0px 2px 2px gold;")
           JS.setCss ("#status", "background:#5c9ccc url(\"images/ui-bg_gloss-wave_55_5c9ccc_500x100.png\") 50% 50% repeat-x;border:1px solid #4297d7")
           ClearScreen
         }
@@ -13496,6 +13504,7 @@ Try entering: gamename Pixie Kicks Ass
         }
         case ("QUIT the game") {
           JS.setCss ("#gamePanes", "display:block;background:transparent")
+          JS.eval ("if($('#sidebar').width() != null){$('#gameContent').css({'max-width':'700px'});}")
           JS.uiHide ("#sidenav-open")
           finish
         }
@@ -13506,19 +13515,20 @@ Try entering: gamename Pixie Kicks Ass
     }
   ]]></function>
   <function name="SetupSidenav"><![CDATA[
-    if (not StartsWith (GetFileURL("foo"), "/game"){
+    if (not StartsWith (GetFileURL("foo"), "/fuck")){
       // Setup navCmdClick() function to handle sideNav command link clicks
       JS.eval ("function navCmdClick(cmd){if (_waitMode || isElementVisible('#gamePanesFinished')){return;}; canSendCommand=true; ASLEvent('HandleNavCmdClick', cmd); canSendCommand=true;}")
       // Add the CSS
-      JS.addScript ("<style> .sidenav  {  height: 100%;    width: 0;    position: fixed;  transition: 0.5s;  z-index: 999;    top: 0;    left: 0;    background-color:#296231;    overflow-x: hidden;    padding-top: 60px;   } .sidenav a {   padding: 8px 8px 8px 32px;    text-decoration: none;  transition: 0.5s;  font-size: 25px;    color: #fac4ff;    display: block;   } .sidenav a:hover {   color: #f1f1f1;  } .sidenav .closebtn {   position: absolute;    top: 0;    right: 25px;    font-size: 36px;    margin-left: 50px; }#sidenav-open{top:25px;}</style>")
+      JS.addScript ("<style> .sidenav  {  height: 100%;    width: 0;    position: fixed;  transition: 0.5s;  z-index: 999;    top: 0;    left: 0;    background-color:#296231;    overflow-x: hidden;    padding-top: 60px;   } .sidenav a {   padding: 8px 8px 8px 32px;    text-decoration: none;  transition: 0.5s;  font-size: 25px;    color: #fac4ff;    display: block;   } .sidenav a:hover {   color: #f1f1f1;  } .sidenav .closebtn {   position: absolute;    top: 0;    left: 25px;    font-size: 36px;    margin-left: 150px; }#sidenav-open{top:25px;}</style>")
       // Add the sidenav element
       mySidenav = ""
       // Move it to the body element
-      JS.eval ("$('#mySidenav').remove(); $('body').append(\"<div id='mySidenav' class='sidenav'><br/>    <a href='' class='closebtn' onclick='closeNav();'>&times;</a> <center><span id='map-holder' /></center></div><span id='sidenav-open' style='font-size:30px;cursor:pointer;top:0;right:0;color:white;background:#296231;border:2px solid #fac4ff;position:fixed;z-index:998;opacity:0.7;' onclick='openNav()'>&#9776;</span>\");")
+      JS.eval ("$('#mySidenav').remove(); $('body').append(\"<div id='mySidenav' class='sidenav'><br/>    <a href='' class='closebtn' onclick='closeNav();'>&times;</a> <center><span id='map-holder' /></center></div><span id='sidenav-open' style='font-size:30px;cursor:pointer;top:0;left:0;color:white;background:#296231;border:2px solid #fac4ff;position:fixed;z-index:998;opacity:0.7;' onclick='openNav()'>&#9776;</span>\");")
+      //JS.eval("$('.closebtn').css('margin-left':$('#mySidenav').width() * .75);")
       // Move the button, too.
       JS.eval ("$('body').append($('#sidenav-open'));")
       // Set up the openNav() and closeNav() functions
-      JS.eval ("function openNav() { $('#mySidenav').width(($(window).width() - ($('#gameBorder').width() || $(window).width()/2) / 2);}; function closeNav() {  $('#mySidenav').width('0');};if(isMobilePlayer()){closeNav();}")
+      JS.eval ("function openNav() { $('#mySidenav').width(($(window).width() - $('#status').width()) / 2 || $(window).width() / 4);}; function closeNav() {  $('#mySidenav').width('0');};if(isMobilePlayer()){closeNav();}")
       AddSidenavCmdLink ("Look")
       AddSidenavCmdLink ("Get all")
       AddSidenavCmdLink ("Undo")
@@ -13530,6 +13540,9 @@ Try entering: gamename Pixie Kicks Ass
       AddSidenavContactLink
     }
   ]]></function>
+  <function name="SetupSidenav">
+    // Do nothing!
+  </function>
   <function name="AddSidenavCmdLink" parameters="cmd"><![CDATA[
     // Add a link with "cmd" as the text, which will handle the command on click
     JS.eval ("$('#mySidenav').append('<a href=\"\" class=\"sidenav-cmdlink\" onclick=\"navCmdClick($(this).html());\">"+cmd+"</a><br/>');")
